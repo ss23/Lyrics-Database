@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 22, 2010 at 08:11 PM
+-- Generation Time: Dec 22, 2010 at 08:37 PM
 -- Server version: 5.0.51
 -- PHP Version: 5.3.3-0.dotdeb.1
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `artists_songs` (
 CREATE TABLE IF NOT EXISTS `songs` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(1000) collate utf8_unicode_ci NOT NULL,
-  `artist_name` varchar(1000) collate utf8_unicode_ci NOT NULL,
+  `artist_name` varchar(1000) collate utf8_unicode_ci default NULL,
   `lyrics` longtext collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`(255)),

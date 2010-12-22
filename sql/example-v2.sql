@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 22, 2010 at 08:10 PM
+-- Generation Time: Dec 22, 2010 at 08:39 PM
 -- Server version: 5.0.51
 -- PHP Version: 5.3.3-0.dotdeb.1
 
@@ -88,7 +88,7 @@ INSERT INTO `artists_songs` (`artist_id`, `song_id`, `relationship_type`) VALUES
 CREATE TABLE IF NOT EXISTS `songs` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(1000) collate utf8_unicode_ci NOT NULL,
-  `artist_name` varchar(1000) collate utf8_unicode_ci NOT NULL,
+  `artist_name` varchar(1000) collate utf8_unicode_ci default NULL,
   `lyrics` longtext collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`(255)),
@@ -101,5 +101,5 @@ CREATE TABLE IF NOT EXISTS `songs` (
 
 INSERT INTO `songs` (`id`, `name`, `artist_name`, `lyrics`) VALUES
 (1, 'Airplanes', '<artist>B.O.B</artist> (ft. <artist:Paramore>Hayley Williams from Paramore</artist>)', 'Can we PRETEND THAT LYRICS R HERE kthx'),
-(2, 'Raven', 'Kittie', 'RAWR SCREAMING ANGRY SHITTY VOCALS');
+(2, 'Raven', NULL, 'RAWR SCREAMING ANGRY SHITTY VOCALS');
 
