@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 22, 2010 at 06:47 PM
+-- Generation Time: Dec 22, 2010 at 08:10 PM
 -- Server version: 5.0.51
 -- PHP Version: 5.3.3-0.dotdeb.1
 
@@ -65,17 +65,19 @@ INSERT INTO `artists` (`id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `artists_songs` (
   `artist_id` int(10) unsigned NOT NULL,
   `song_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`song_id`,`artist_id`)
+  `relationship_type` enum('Main Contributer','Featured') collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`artist_id`,`song_id`),
+  KEY `artistrelationship_id` (`relationship_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `artists_songs`
 --
 
-INSERT INTO `artists_songs` (`artist_id`, `song_id`) VALUES
-(4, 1),
-(5, 1),
-(2, 2);
+INSERT INTO `artists_songs` (`artist_id`, `song_id`, `relationship_type`) VALUES
+(2, 2, 'Main Contributer'),
+(5, 1, 'Main Contributer'),
+(4, 1, 'Featured');
 
 -- --------------------------------------------------------
 
@@ -98,6 +100,6 @@ CREATE TABLE IF NOT EXISTS `songs` (
 --
 
 INSERT INTO `songs` (`id`, `name`, `artist_name`, `lyrics`) VALUES
-(1, 'Airplanes', '', 'Can we PRETEND THAT LYRICS R HERE kthx'),
-(2, 'Raven', '', 'RAWR SCREAMING ANGRY SHITTY VOCALS');
+(1, 'Airplanes', '<artist>B.O.B</artist> (ft. <artist:Paramore>Hayley Williams from Paramore</artist>)', 'Can we PRETEND THAT LYRICS R HERE kthx'),
+(2, 'Raven', '<artist>Kittie</artist>', 'RAWR SCREAMING ANGRY SHITTY VOCALS');
 

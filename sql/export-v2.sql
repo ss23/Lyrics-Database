@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 22, 2010 at 06:46 PM
+-- Generation Time: Dec 22, 2010 at 08:11 PM
 -- Server version: 5.0.51
 -- PHP Version: 5.3.3-0.dotdeb.1
 
@@ -47,7 +47,9 @@ CREATE TABLE IF NOT EXISTS `artists` (
 CREATE TABLE IF NOT EXISTS `artists_songs` (
   `artist_id` int(10) unsigned NOT NULL,
   `song_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`song_id`,`artist_id`)
+  `relationship_type` enum('Main Contributer','Featured') collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`artist_id`,`song_id`),
+  KEY `artistrelationship_id` (`relationship_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
