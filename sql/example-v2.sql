@@ -101,5 +101,5 @@ CREATE TABLE IF NOT EXISTS `songs` (
 
 INSERT INTO `songs` (`id`, `name`, `artist_name`, `lyrics`) VALUES
 (1, 'Airplanes', '<artist>B.O.B</artist> (ft. <artist:Paramore>Hayley Williams from Paramore</artist>)', 'Can we PRETEND THAT LYRICS R HERE kthx'),
-(2, 'Raven', '<artist>Kittie</artist>', 'RAWR SCREAMING ANGRY SHITTY VOCALS');
+(2, 'Raven', 'Kittie', 'RAWR SCREAMING ANGRY SHITTY VOCALS');
 
