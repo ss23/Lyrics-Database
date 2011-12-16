@@ -2,7 +2,7 @@
 /**
  * Bootstrapper
  */
- 
+
 // Versatile Extendable Object Notation
 // Veon
 
@@ -40,20 +40,20 @@ if (empty($_POST['input'])) {
 		}
 	}
 	// Check that it's valid of the type detected/specified. If not, null it.
-	
-	
+
+
 	if (empty($type)) {
 		API::Send(new Error(ERROR_INVALID_REQUEST));
 		die();
 	}
 	API::setType($type);
-	
+
 	// If we've made it this far, we're ready to try processing the request.
 	$Input = API::processInput();
-	
+
 	// Register the autoloader here, to handle requests that may require non essential classes.
 	spl_autoload_register('API::autoloader');
-	
+
 	foreach ($Input as $Type => $Parameters) {
 		// Process everything.
 		try {
