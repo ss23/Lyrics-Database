@@ -11,7 +11,7 @@ class SearchLyrics extends VeonExtension {
 	public $TrackLength;
 	public $TrackNumber;
 	public $DiskNumber;
-	
+
 	protected $ParamArtist;
 	protected $ParamTrack;
 	protected $ParamAlbum;
@@ -19,7 +19,7 @@ class SearchLyrics extends VeonExtension {
 	protected $ParamTrackLength;
 	protected $ParamTrackNumber;
 	protected $ParamDiskNumber;
-	
+
 	public function run() {
 		// In case people didn't realise, this is hard coded to implement Veon, not to return real lyrics.
 		if ($this->ParamTrack == 'The Middle') {
