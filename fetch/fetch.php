@@ -1,7 +1,7 @@
 <html>
 	<body>
 		<form action="../api/" method="post">
-			<input type="hidden" value="<?php 
+			<input type="hidden" value="<?php
 				$Input = array(
 					'SearchLyrics' => array(
 						'Artist' => 'Jimmy Eat World',

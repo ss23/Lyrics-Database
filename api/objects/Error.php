@@ -13,7 +13,7 @@ define('ERROR_INTERNAL_SERVER', 8);
 class Error {
 	public $ErrorCode; // These should be protected, but no reflection at the moment to deal with it.
 	public $ErrorMessage;
-	
+
 	public function __construct($ErrorCode, $ErrorMessage = null) {
 		$this->ErrorCode = $ErrorCode;
 		if ($ErrorMessage == null) {

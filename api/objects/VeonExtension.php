@@ -14,18 +14,18 @@ abstract class VeonExtension {
 		}
 		$this->run();
 	}
-	
+
 	public function __set($name, $value) {
 		// Tried to set a property that doesn't exist.
 		// Once again, we need to extend the exceptions tbh.
 		throw new Exception('Invalid Parameter');
 		return false;
 	}
-	
+
 	public function run() {
 		// We could use an abstract function, but that wouldn't give us the cool exception "not implemented".
 		// I shall experiment with catching a "method run() wasn't implemented" exception/error later.
 		throw new Exception('Not implemented');
 	}
-	
+
 }
