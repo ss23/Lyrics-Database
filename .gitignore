@@ -48,3 +48,6 @@ dwsync.xml
 ###################
 *.komodoproject
 .komodotools
+
+# IDEA IDE configuration folder
+.idea/
