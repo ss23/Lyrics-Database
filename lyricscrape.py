@@ -83,9 +83,10 @@ def json_to_db(file_in):
     cur.close()
     con.close()
 
-def scrape(file_out):
+# TODO: Segment code and add arguments for loop range control for partial scraping
+def scrape(file_out, artists_url='http://lyrics.wikia.com/index.php?title=Category:Artists_A'):
     data = {}
-    soup = BeautifulSoup(urllib2.urlopen('http://lyrics.wikia.com/index.php?title=Category:Artists_A').read())
+    soup = BeautifulSoup(urllib2.urlopen(artists_url).read())
 
     # Loop through pages of artists
     while True:
@@ -180,7 +181,7 @@ def scrape(file_out):
 
     f = open(file_out, 'w')
     json.dump(data, f)
-    print json.dumps(data)
+#    print json.dumps(data)
 
 
 ## Script start
@@ -191,11 +192,13 @@ if len(sys.argv) < 3:
     sys.exit(1)
 else:
     if sys.argv[1] == 'scrape':
-        print "Starting scape of %s..." % sys.argv[2]
+        print "Starting scrape..."
+        scrape(sys.argv[2])
+        print "Saved to: %s" % sys.argv[2]
     elif sys.argv[1] == 'import':
         json_file = sys.argv[2]
         print "Importing %s into database '%s'..." % (json_file, DB_NAME)
-#        json_to_db(json_file)
+        json_to_db(json_file)
     else:
         print USAGE
         sys.exit(1)
