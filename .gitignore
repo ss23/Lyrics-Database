@@ -51,3 +51,5 @@ dwsync.xml
 
 # IDEA IDE configuration folder
 .idea/
+# CakePHP tmp files
+tmp/*
