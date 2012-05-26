@@ -8,3 +8,4 @@ Scraper (lyricscrape.py) Requirements:
 - Third party packages:
     -http://www.crummy.com/software/BeautifulSoup/
     -http://musicbrainz.org/doc/python-musicbrainz2
+    -http://mysql-python.sourceforge.net/
