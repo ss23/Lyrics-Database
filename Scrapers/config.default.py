@@ -1,4 +1,4 @@
-// Database configuration
+# Database configuration
 DB_HOST = ''
 DB_USER = ''
 DB_PASS = ''
