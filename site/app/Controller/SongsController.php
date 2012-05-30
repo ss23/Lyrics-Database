@@ -6,7 +6,6 @@ App::uses('AppController', 'Controller');
  * @property Song $Song
  */
 class SongsController extends AppController {
-	public $theme = 'LyricJam';
 
 /**
  * index method
@@ -22,18 +21,15 @@ class SongsController extends AppController {
  * view method
  *
  * @param string $id
+ * @param string $name
  * @return void
+ * @throws NotFoundException If invalid song
  */
-	public function view($id = null, $name = null) {
-		$this->Song->id = $id;
+	public function view($id = null) {
+        $this->Song->id = $id;
 		if (!$this->Song->exists()) {
 			throw new NotFoundException(__('Invalid song'));
 		}
-		// We want to force a redirect to a URL containing the URL if the one they've given us is either invalid, or non-existent
-		if ($name != $this->Song->Field('name')) {
-			$this->redirect(array('action' => 'view', $id, $this->Song->Field('name')));
-		}
-		// A pretty title!
 		$this->set('title_for_layout', $this->Song->Field('name') . ' by ' . $this->Song->Artist->Field('name'));
 		$this->set('song', $this->Song->read());
 	}

@@ -29,6 +29,7 @@ class AlbumsController extends AppController {
 		if (!$this->Album->exists()) {
 			throw new NotFoundException(__('Invalid album'));
 		}
+        $this->set('title_for_layout', $this->Album->Field('name'));
 		$this->set('album', $this->Album->read(null, $id));
 	}
 

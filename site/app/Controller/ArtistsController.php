@@ -29,6 +29,7 @@ class ArtistsController extends AppController {
 		if (!$this->Artist->exists()) {
 			throw new NotFoundException(__('Invalid artist'));
 		}
+        $this->set('title_for_layout', $this->Artist->Field('name'));
 		$this->set('artist', $this->Artist->read(null, $id));
 	}
 
