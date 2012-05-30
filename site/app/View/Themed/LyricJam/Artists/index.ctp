@@ -1,23 +1,21 @@
-<div class="songs index">
-	<h2><?php echo __('Songs');?></h2>
+<div class="artists index">
+	<h2><?php echo __('Artists');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
-			<th><?php echo $this->Paginator->sort('lyrics');?></th>
 			<th><?php echo $this->Paginator->sort('uuid');?></th>
 			<th class="actions"><?php echo __('Actions');?></th>
 	</tr>
 	<?php
 	$i = 0;
-	foreach ($songs as $song): ?>
+	foreach ($artists as $artist): ?>
 	<tr>
-		<td><?php echo h($song['Song']['id']); ?>&nbsp;</td>
-		<td><?php echo h($song['Song']['name']); ?>&nbsp;</td>
-		<td><?php echo h($song['Song']['lyrics']); ?>&nbsp;</td>
-		<td><?php echo h($song['Song']['uuid']); ?>&nbsp;</td>
+		<td><?php echo h($artist['Artist']['id']); ?>&nbsp;</td>
+		<td><?php echo h($artist['Artist']['name']); ?>&nbsp;</td>
+		<td><?php echo h($artist['Artist']['uuid']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', 'id' => $song['Song']['id'], 'slug' => $this->Slug->slugify($song['Song']['name']))); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', 'id' => $artist['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['name']))); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -36,11 +34,4 @@
 		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('List Albums'), array('controller' => 'albums', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Artists'), array('controller' => 'artists', 'action' => 'index')); ?> </li>
-	</ul>
 </div>
