@@ -32,11 +32,14 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+    public $helpers = array('Session', 'Html', 'Form', 'Slug');
+    public $theme = 'LyricJam';
 	/**
 	 * Hack hack hack!
 	 */
 	public function beforeFilter() {
-		if (($this->name != 'Songs') or ($this->action != 'view')) {
+		if ($this->action != 'view' && $this->action != 'index') {
 			die("Under Construction");
 		}
 	}
