@@ -1,5 +1,5 @@
-import config, urllib2
-from BeautifulSoup import BeautifulSoup, Tag
+import config, urllib2, re, LyricJam
+from bs4 import BeautifulSoup
 
 NIGHTWISH_URL = 'http://nightwish.com/en/releases/lyrics'
 
@@ -11,19 +11,34 @@ def scrape():
 		print e
 
 	# Get albums
-	albums = []
-	album_soup = soup.select('.sidebar_right_2c:first-child a')
-	album_regex = re.compile(r"s=[0-9]*")
+	albums = {}
+	album_soup = soup.select('.sidebar_right_2c a')
+
 	for album in album_soup:
-		albums.append({'name': album.img['alt'], 'id': album_regex.search(album.['href']))
+		try:
+			a = re.search(r"a=([0-9]*)", album['href']).group(1)
+			albums[album.img['title']] = a
+		except Exception as e:
+			# This just means its not an album
+			pass # PASSU
 
-	# So now we have artists in albums
-	for album in albums:
-		# Now, we need to get a list of songs, and get each of them
-		soup = BeautifulSoup(urllib2.urlopen(NIGHTWISH_URL + '/?a=' album['id'] . + '&s=1')
+	for name, id in albums.iteritems():
+		# Get those songs!
+		i = 1;
 
-		for song in songs
-			
+		while i < 15:
+			try:
+				soup =  BeautifulSoup(urllib2.urlopen(NIGHTWISH_URL + '?a=' + str(id) + '&s=' + str(i)).read())
+				lyrics = soup.select('.content_main_2c .text')[0].text
+				title = soup.select('.content_main_2c .headline3')[0].text
 
+				LyricJam.addLyrics('Nightwish', name, title, lyrics)
+			except Exception as e:
+				i = 16
+				# Make sure that i is high!
+			else:
+				i += 1	
+	
+	# Done!		
 # Go!
 scrape()
