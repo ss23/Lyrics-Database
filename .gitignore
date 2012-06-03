@@ -53,3 +53,4 @@ dwsync.xml
 .idea/
 # CakePHP tmp files
 tmp/*
+*.json
