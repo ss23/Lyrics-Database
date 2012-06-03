@@ -1,44 +1,33 @@
-import config, urllib2, re, LyricJam
+import config, urllib2, re
 from bs4 import BeautifulSoup
+from ScrapeJam import ScrapeJam, getHtml, cleanLyrics
 
 NIGHTWISH_URL = 'http://nightwish.com/en/releases/lyrics'
 
-def scrape():
-	try:
-		soup = BeautifulSoup(urllib2.urlopen(NIGHTWISH_URL).read())
-	except Exception as e: 
-		print "Error initilizaing scraper:"
-		print e
-
-	# Get albums
-	albums = {}
-	album_soup = soup.select('.sidebar_right_2c a')
-
-	for album in album_soup:
+def getAlbums(artist_tuple):
+	soup = BeautifulSoup(getHtml(artist_tuple[1]))
+	albums = soup.select('.sidebar_right_2c a')
+	ret = []
+	for album in albums:
 		try:
-			a = re.search(r"a=([0-9]*)", album['href']).group(1)
-			albums[album.img['title']] = a
+			ret.append((album.img['title'], album['href']))
 		except Exception as e:
 			# This just means its not an album
 			pass # PASSU
-
-	for name, id in albums.iteritems():
-		# Get those songs!
-		i = 1;
-
-		while i < 15:
-			try:
-				soup =  BeautifulSoup(urllib2.urlopen(NIGHTWISH_URL + '?a=' + str(id) + '&s=' + str(i)).read())
-				lyrics = soup.select('.content_main_2c .text')[0].text
-				title = soup.select('.content_main_2c .headline3')[0].text
-
-				LyricJam.addLyrics('Nightwish', name, title, lyrics)
-			except Exception as e:
-				i = 16
-				# Make sure that i is high!
-			else:
-				i += 1	
+	return ret
 	
-	# Done!		
-# Go!
+def getSongs(artist_tuple, album_tuple):
+	soup = BeautifulSoup(getHtml(NIGHTWISH_URL+album_tuple[1]))
+	songs = soup.select('.box250 .textsmall li a')
+	return [(song.string, song['href']) for song in songs]
+	
+def getLyrics(artist_tuple, album_tuple, song_tuple):
+	soup = BeautifulSoup(getHtml(NIGHTWISH_URL+song_tuple[1]))
+	lyricsoup = soup.select('.content_main_2c .text')[0]
+	return cleanLyrics(lyricsoup)
+	
+def scrape():
+	sj = ScrapeJam('nightwish.json', 'nightwish_errs.json')
+	sj.scrape([('Nightwish',NIGHTWISH_URL)], getAlbums, getSongs, getLyrics)
+
 scrape()
