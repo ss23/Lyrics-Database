@@ -18,7 +18,7 @@
 <body>
 <div id="container">
     <div id="header">
-        <h1><?php echo $this->Html->link('LyricJam: we serve lyrics and sometimes jam', 'http://lyricjam.com'); ?></h1>
+        <h1><?php echo $this->Html->link('LyricJam: we serve lyrics and sometimes jam', '/'); ?></h1>
     </div>
     <div id="content">
 
