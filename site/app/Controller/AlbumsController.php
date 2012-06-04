@@ -25,6 +25,8 @@ class AlbumsController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		//TODO: used 'containable' instead of recursive for getting artist's name in the view
+		$this->Album->recursive = 2;
 		$this->Album->id = $id;
 		if (!$this->Album->exists()) {
 			throw new NotFoundException(__('Invalid album'));

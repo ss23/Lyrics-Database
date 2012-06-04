@@ -1,22 +1,15 @@
-<div class="artists index">
+<div class="artists">
 	<h2><?php echo __('Artists');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
-			<th><?php echo $this->Paginator->sort('uuid');?></th>
-			<th class="actions"><?php echo __('Actions');?></th>
 	</tr>
 	<?php
 	$i = 0;
 	foreach ($artists as $artist): ?>
 	<tr>
-		<td><?php echo h($artist['Artist']['id']); ?>&nbsp;</td>
-		<td><?php echo h($artist['Artist']['name']); ?>&nbsp;</td>
-		<td><?php echo h($artist['Artist']['uuid']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', 'id' => $artist['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['name']))); ?>
-		</td>
+		<td><?php echo $this->Html->link(h($artist['Artist']['name']), array('action' => 'view', 'id' => $artist['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['name']))); ?></td>
+
 	</tr>
 <?php endforeach; ?>
 	</table>

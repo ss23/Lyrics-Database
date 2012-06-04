@@ -30,7 +30,12 @@ class ArtistsController extends AppController {
 			throw new NotFoundException(__('Invalid artist'));
 		}
         $this->set('title_for_layout', $this->Artist->Field('name'));
-		$this->set('artist', $this->Artist->read(null, $id));
+		$this->set('artist', $this->Artist->Field('name'));
+		$this->set('albums', $this->Artist->Song->Album->find('all',
+			array(
+				'fields' => array('DISTINCT id', 'name')
+			)
+		));
 	}
 
 /**

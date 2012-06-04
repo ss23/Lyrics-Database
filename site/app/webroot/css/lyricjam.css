@@ -722,3 +722,8 @@ pre {
 #url-rewriting-warning {
 	display:none;
 }
+
+/* Artist Page */
+.song-count {
+	margin-left: 5px;
+}
