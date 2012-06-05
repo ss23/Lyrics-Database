@@ -1,5 +1,5 @@
 <?php
-App::uses('AppController', 'Controller');
+App::uses('AppController', 'Controller', 'Set');
 /**
  * Artists Controller
  *
@@ -25,15 +25,21 @@ class ArtistsController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		$this->Artist->recursive = 2;
 		$this->Artist->id = $id;
 		if (!$this->Artist->exists()) {
 			throw new NotFoundException(__('Invalid artist'));
 		}
         $this->set('title_for_layout', $this->Artist->Field('name'));
 		$this->set('artist', $this->Artist->Field('name'));
-		$this->set('albums', $this->Artist->Song->Album->find('all',
-			array(
-				'fields' => array('DISTINCT id', 'name')
+		$testy = $this->Artist->find('all', array(
+				'conditions' => array('id' => $id)
+			)
+		);
+		$album_ids = array_unique(Set::extract('/Song/Album/id', $testy));
+		$this->set('albums', $this->Artist->Song->Album->find('all', array(
+				'fields' => array('DISTINCT id', 'name'),
+				'conditions' => array('id' => $album_ids)
 			)
 		));
 	}
