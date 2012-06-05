@@ -1,4 +1,5 @@
 from config import *
+import sys, simplejson as json
 import MySQLdb as mdb
 
 USAGE = '''
@@ -31,9 +32,9 @@ class LyricJam:
 		if (self.cur.rowcount < 1):
 			# New album!
 			self.cur.execute("INSERT INTO `albums` (`name`) VALUES (%s)", (album))
-			album_id = cur.lastrowid
+			album_id = self.cur.lastrowid
 		else:
-			album_id = cur.fetchone()[0]
+			album_id = self.cur.fetchone()[0]
 
 		# Insert song
 		self.cur.execute("SELECT `song_id` FROM `albums_songs` WHERE `album_id` = %s", (album_id))
@@ -95,7 +96,8 @@ if __name__ == "__main__":
 			json_file = sys.argv[2]
 			print "Importing %s into database '%s'..." % (json_file, DB_NAME)
 			lj = LyricJam()
-			lj.import_json('test.json')
+			lj.import_json(json_file)
+			lj.close() # Commit DB transaction
 		else:
 			print USAGE
 			sys.exit(1)
