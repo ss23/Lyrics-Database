@@ -14,3 +14,4 @@ Python Requirements for Scraping:
     -http://musicbrainz.org/doc/python-musicbrainz2
     -http://mysql-python.sourceforge.net/
     -http://code.google.com/p/python-progressbar/
+    -http://code.google.com/p/simplejson/
