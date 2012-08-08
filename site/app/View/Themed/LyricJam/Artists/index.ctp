@@ -8,7 +8,7 @@
 	$i = 0;
 	foreach ($artists as $artist): ?>
 	<tr>
-		<td><?php echo $this->Html->link(h($artist['Artist']['name']), array('action' => 'view', 'id' => $artist['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['name']))); ?></td>
+		<td><?php echo $this->Html->link($artist['Artist']['name'], array('action' => 'view', 'id' => $artist['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['name']))); ?></td>
 
 	</tr>
 <?php endforeach; ?>
