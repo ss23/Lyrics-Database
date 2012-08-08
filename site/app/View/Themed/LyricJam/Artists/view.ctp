@@ -1,7 +1,7 @@
 <div class="artists">
 
 	<?php
-		$this->Html->addCrumb(h($artist));
+		$this->Html->addCrumb($artist);
 		echo $this->Html->getCrumbs(' > ', __('Home'));
 	?>
 

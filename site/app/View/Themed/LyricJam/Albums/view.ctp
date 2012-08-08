@@ -2,8 +2,8 @@
 
 	<?php
 		$artist = $album['Song'][0]['Artist'][0];
-		$this->Html->addCrumb(h($artist['name']), array('controller' => 'artists', 'action' => 'view', 'id' => $artist['id'], 'slug' => $this->Slug->slugify($artist['name'])));
-		$this->Html->addCrumb(h($album['Album']['name']));
+		$this->Html->addCrumb($artist['name'], array('controller' => 'artists', 'action' => 'view', 'id' => $artist['id'], 'slug' => $this->Slug->slugify($artist['name'])));
+		$this->Html->addCrumb($album['Album']['name']);
 		echo $this->Html->getCrumbs(' > ', __('Home'));
 	?>
 
