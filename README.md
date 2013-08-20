@@ -1,6 +1,6 @@
 # Lyric Jam#
 
-https://api.travis-ci.org/ss23/Lyrics-Database.png
+![Travis CI](https://api.travis-ci.org/ss23/Lyrics-Database.png)
 
 Code repository for lyricjam.com
 
