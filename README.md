@@ -1,5 +1,7 @@
 # Lyric Jam#
 
+https://api.travis-ci.org/ss23/Lyrics-Database.png
+
 Code repository for lyricjam.com
 
 A CakePHP application for now, designed to serve up lyrics that have been pre-scraped (legally).
