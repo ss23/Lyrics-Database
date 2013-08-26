@@ -1,4 +1,5 @@
-Config
+Config/database.php
+Config/email.php
 tmp
 Plugin
 Vendor
