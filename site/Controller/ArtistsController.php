@@ -7,6 +7,10 @@ App::uses('AppController', 'Controller', 'Set');
  */
 class ArtistsController extends AppController {
 
+	public $paginate = array(
+			'limit' => 30,
+			'order' => array('Artist.name' => 'asc')
+	);
 
 /**
  * index method
