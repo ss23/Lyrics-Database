@@ -8,7 +8,8 @@
     ],
     "require": {
         "pear-cakephp/cakephp": ">=2.3.4",
-        "cakephp/debug_kit": "2.2.*"
+        "cakephp/debug_kit": "2.2.*",
+        "cakedc/search": "dev-develop"
     },
     "config": {
         "vendor-dir": "Vendor/"

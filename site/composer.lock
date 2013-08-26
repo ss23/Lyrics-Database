@@ -3,8 +3,42 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "dc2e7617287c1d2b8ed868bb6e94074b",
+    "hash": "802771a153ad843c3886bed3a67b6207",
     "packages": [
+        {
+            "name": "cakedc/search",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CakeDC/search.git",
+                "reference": "b1e192ef269b1aa07522863d76e01284ced6e8af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CakeDC/search/zipball/b1e192ef269b1aa07522863d76e01284ced6e8af",
+                "reference": "b1e192ef269b1aa07522863d76e01284ced6e8af",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cake Development Corporation",
+                    "email": "team@cakedc.com",
+                    "homepage": "http://cakedc.com"
+                }
+            ],
+            "description": "The Search plugin allows you to make any kind of data searchable, enabling you to implement a robust searching rapidly.",
+            "homepage": "http://github.com/CakeDC/search",
+            "time": "2013-08-20 23:19:23"
+        },
         {
             "name": "cakephp/debug_kit",
             "version": "2.2.1",
@@ -159,9 +193,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "cakedc/search": 20
+    },
     "platform": [
 
     ],
