@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ss23/Lyrics-Database.png?branch=dev)](https://travis-ci.org/ss23/Lyrics-Database)
+
 Installation:
 - Copy all the files somewhere
 - Direct your webserver to /path/site/app/webroot
