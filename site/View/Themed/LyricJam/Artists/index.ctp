@@ -1,30 +1,22 @@
 <div class="artists">
 	<h2><?php echo __('Artists');?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('name');?></th>
-	</tr>
-	<?php
-	$i = 0;
-	foreach ($artists as $artist): ?>
-	<tr>
-		<td><?php echo $this->Html->link($artist['Artist']['name'], array('action' => 'view', 'id' => $artist['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['name']))); ?></td>
 
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
+	<p><?php echo $this->Paginator->sort('name');?></p>
+	
+	<div class="list-group col-md-8">
 	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+		foreach ($artists as $artist) {
+			echo $this->Html->link($artist['Artist']['name'], array('action' => 'view', 'id' => $artist['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['name'])), array('class'=>'list-group-item'));
+		}
 	?>
 	</div>
+	<?php
+		if ($this->Paginator->hasPage(2)) {
+			echo '<ul class="pagination pagination-lg">';
+			echo $this->Paginator->prev('&laquo; Prev', array('tag'=>'li', 'escape'=>false), null, array('tag'=>'li', 'escape'=>false, 'class' => 'disabled', 'disabledTag'=>'a'));
+			echo $this->Paginator->numbers(array('tag'=>'li', 'separator' => '', 'currentTag'=>'a', 'currentClass'=>'active'));
+			echo $this->Paginator->next('Next &raquo;', array('tag'=>'li', 'escape'=>false), null, array('tag'=>'li', 'escape'=>false, 'class' => 'disabled', 'disabledTag'=>'a'));
+			echo '</ul>';
+		}
+	?>
 </div>

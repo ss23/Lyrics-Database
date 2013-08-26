@@ -2,7 +2,7 @@
 
 	<?php
 		$this->Html->addCrumb($artist);
-		echo $this->Html->getCrumbs(' > ', __('Home'));
+		echo $this->element("breadcrumbs");
 	?>
 
 	<h2><?php echo h($artist); ?></h2>
