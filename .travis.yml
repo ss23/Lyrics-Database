@@ -10,6 +10,9 @@ env:
   - DB=sqlite
 
 before_script:
+  # Composer install
+  cd site
+  composer install --prefer-dist --dev
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test2;'; fi"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test3;'; fi"
@@ -101,10 +104,10 @@ before_script:
         \$this->{\$source} = \$config;
       }
     }
-    }" > app/Config/database.php
+    }" > Config/database.php
 
 script:
-  - ./lib/Cake/Console/cake test core AllTests --stderr
+  - ./site/lib/Cake/Console/cake test core AllTests --stderr
 
 notifications:
   email: false
