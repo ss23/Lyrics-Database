@@ -34,14 +34,7 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
     public $helpers = array('Session', 'Html', 'Form', 'Slug');
+    
     public $theme = 'LyricJam';
-	/**
-	 * Hack hack hack!
-	 */
-	public function beforeFilter() {
-		if ($this->action != 'view' && $this->action != 'index') {
-			die("Under Construction");
-		}
-	}
 
 }
