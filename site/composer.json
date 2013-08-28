@@ -11,6 +11,9 @@
         "cakephp/debug_kit": "2.2.*",
         "cakedc/search": "dev-develop"
     },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
     "config": {
         "vendor-dir": "Vendor/"
     }
