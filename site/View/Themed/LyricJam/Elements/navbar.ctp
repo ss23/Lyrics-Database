@@ -11,10 +11,12 @@
 
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li><a href="/"><span class="glyphicon glyphicon-home"></span> <?php echo __("Home") ?></a></li>
+      <li><a href="/">
+      	<span class="glyphicon glyphicon-home"></span> <?php echo __("Home") ?>
+      </a></li>
       <li class="dropdown">
         <?php
-        	echo $this->Html->link('<span class="glyphicon glyphicon-book"></span> '.__("Browse").' <b class="caret"></b>',
+        	echo $this->Html->link('<span class="glyphicon glyphicon-list"></span> '.__("Browse").' <b class="caret"></b>',
 				array('controller'=>'songs'),
 				array(
 					'escape' => false,
@@ -31,13 +33,19 @@
           <li><a href="#">One more separated link</a></li>
         </ul>
       </li>
+      <li><a href="/api">
+      	<span class="glyphicon glyphicon-book"></span> <?php echo __("API Docs") ?>
+      </a></li>
+      <li><a href="/about">
+      	<span class="glyphicon glyphicon-info-sign"></span> <?php echo __("About") ?>
+      </a></li>
     </ul>
 	<form class="navbar-form navbar-right" role="search">
       <div class="form-group">
       <div id="searchbar" class="input-group">
 	      <input type="text" class="form-control" placeholder="Lyric, Artist, or Song title...">
 	      <span class="input-group-btn">
-	        <button class="btn btn-default" type="button"><?php echo __("Search") ?></button>
+	        <button class="btn btn-default" type="button" title="Search"><span class="glyphicon glyphicon-search"></span></button>
 	      </span>
 	    </div>
       </div>
