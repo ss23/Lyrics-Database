@@ -51,6 +51,8 @@ class PagesController extends AppController {
  * @var array
  */
 	public $uses = array();
+	
+	public $components = array('Paginator');
 
 /**
  * Displays a view
@@ -78,6 +80,40 @@ class PagesController extends AppController {
 		}
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
 		$this->render(implode('/', $path));
+	}
+	
+	public function search($query = null) {
+		// TODO: sanitize and prepare query for more advanced searching, especially minimum char count
+		if (is_null($query)) {
+			if (isset($this->params['url']['q']))
+				$this->redirect(array($this->params['url']['q']));
+			$this->redirect('/');
+		} else {
+			$this->loadModel('Song');
+			$this->loadModel('Artist');
+			$this->paginate = array(
+				'Song' => array(
+					'limit' => 10,
+					'conditions' => array('OR'=> array('Song.name LIKE'=>"%$query%", 'Song.lyrics LIKE'=>"%$query%")),
+				),
+				'Artist' => array(
+						'limit' => 10,
+						'conditions' => array('Artist.name LIKE'=>"%$query%"),
+				),
+			);
+			$this->Artist->recursive = 1;
+			try {
+				$songs = $this->Paginator->paginate('Song');
+			} catch (NotFoundException $e) {
+				$songs = array();
+			}
+			try {
+				$artists = $this->Paginator->paginate('Artist');
+			} catch (NotFoundException $e) {
+				$artists = array();
+			}
+			$this->set(compact('query','songs','artists'));
+		}
 	}
 
 }
