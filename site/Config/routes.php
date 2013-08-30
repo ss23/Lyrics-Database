@@ -25,11 +25,17 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-Router::connect('/', array('controller' => 'artists', 'action' => 'index'));
+	Router::connect('/', array('controller' => 'artists', 'action' => 'index'));
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */
-	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+	Router::connect('/search/*', array('controller' => 'pages', 'action' => 'search'));
+	Router::connect('/about', array('controller' => 'pages', 'action' => 'display', 'about'));
+	Router::connect('/docs', array('controller' => 'pages', 'action' => 'display', 'apidocs'));
+	Router::connect('/privacy', array('controller' => 'pages', 'action' => 'display', 'privacy'));
+	Router::connect('/terms', array('controller' => 'pages', 'action' => 'display', 'terms'));
+	Router::connect('/legal', array('controller' => 'pages', 'action' => 'display', 'legal'));
+// 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
 /**
  * Fancy rule for making songs nice

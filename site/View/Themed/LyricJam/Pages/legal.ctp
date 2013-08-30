@@ -1,0 +1,1 @@
+<h2>Legal Information</h2>

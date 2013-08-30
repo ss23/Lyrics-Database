@@ -25,27 +25,31 @@
 				)
 			);
         ?>
-        <ul class="dropdown-menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li><a href="#">Separated link</a></li>
-          <li><a href="#">One more separated link</a></li>
+        <ul class="dropdown-menu browse-list">
+          <li><a href="<?php echo Router::url(array('controller' => 'artists', 'action' => 'index')) ?>">
+            <span class="glyphicon glyphicon-user"></span><span class="browse-item-text"><?php echo __("Artists") ?></span><span class="badge pull-right"><?php echo $counts['Artists'] ?></span>
+          </a></li>
+          <li><a href="<?php echo Router::url(array('controller' => 'albums', 'action' => 'index')) ?>">
+            <span class="glyphicon glyphicon-folder-open"></span><span class="browse-item-text"><?php echo __("Albums") ?></span><span class="badge pull-right"><?php echo $counts['Albums'] ?></span>
+          </a></li>
+          <li><a href="<?php echo Router::url(array('controller' => 'songs', 'action' => 'index')) ?>">
+            <span class="glyphicon glyphicon-music"></span><span class="browse-item-text"><?php echo __("Songs") ?></span><span class="badge pull-right"><?php echo $counts['Songs'] ?></span>
+          </a></li>
         </ul>
       </li>
-      <li><a href="/api">
+      <li><a href="<?php echo Router::url(array('controller' => 'pages', 'action' => 'display', 'apidocs')) ?>">
       	<span class="glyphicon glyphicon-book"></span> <?php echo __("API Docs") ?>
       </a></li>
-      <li><a href="/about">
+      <li><a href="<?php echo Router::url(array('controller' => 'pages', 'action' => 'display', 'about')) ?>">
       	<span class="glyphicon glyphicon-info-sign"></span> <?php echo __("About") ?>
       </a></li>
     </ul>
-	<form class="navbar-form navbar-right" role="search">
+	<form action="/search" method="get" class="navbar-form navbar-right" role="search">
       <div class="form-group">
       <div id="searchbar" class="input-group">
-	      <input type="text" class="form-control" placeholder="Lyric, Artist, or Song title...">
+	      <input name="q" type="text" class="form-control" placeholder="Lyric, Artist, or Song title...">
 	      <span class="input-group-btn">
-	        <button class="btn btn-default" type="button" title="Search"><span class="glyphicon glyphicon-search"></span></button>
+	        <button class="btn btn-default" type="submit" title="Search"><span class="glyphicon glyphicon-search"></span></button>
 	      </span>
 	    </div>
       </div>

@@ -35,8 +35,8 @@
 </div> <!-- /wrap -->
 
 <div id="footer">
-	<div class="container">
-		<p class="text-muted credit text-center">This is my foot. Is it <em>kawaii</em>?</p>
+	<div class="container text-center">
+		<?php echo $this->element("footer") ?>
 	</div>
 </div>
 
