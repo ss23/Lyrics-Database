@@ -31,4 +31,20 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+	
+	public function getCacheCount(){
+		$key = "{$this->alias}.count";
+		$count = Cache::read($key);
+		if (!$count)
+			$count = $this->updateCacheCount();
+		return $count;
+	}
+	
+	public function updateCacheCount(){
+		$key = "{$this->alias}.count";
+		$count = $this->find('count');
+		Cache::write($key, $count);
+		return $count;
+	}
+	
 }

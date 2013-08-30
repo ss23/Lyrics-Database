@@ -35,6 +35,20 @@ class AppController extends Controller {
 
     public $helpers = array('Session', 'Html', 'Form', 'Slug');
     
+    public $components = array(	
+    	'DebugKit.Toolbar',
+    );
+    
     public $theme = 'LyricJam';
+    
+    public function beforeFilter(){
+    	// TODO: Investigate better method for caching, and $this->loadModel() vs ClassRegistry::init()
+    	$counts = array(
+    		'Artists' => ClassRegistry::init('Artists')->getCacheCount(),
+    		'Albums' => ClassRegistry::init('Albums')->getCacheCount(),
+    		'Songs' => ClassRegistry::init('Songs')->getCacheCount(),
+    	);
+    	$this->set(compact('counts'));
+    }
 
 }
