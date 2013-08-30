@@ -6,6 +6,11 @@ App::uses('AppController', 'Controller');
  * @property Song $Song
  */
 class SongsController extends AppController {
+	
+	public $paginate = array(
+			'limit' => 30,
+			'order' => array('Song.name' => 'asc')
+	);
 
 /**
  * index method
@@ -13,7 +18,7 @@ class SongsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Song->recursive = 0;
+		$this->Song->recursive = 1;
 		$this->set('songs', $this->paginate());
 	}
 
@@ -32,26 +37,6 @@ class SongsController extends AppController {
 		}
 		$this->set('title_for_layout', $this->Song->Field('name') . ' by ' . $this->Song->Artist->Field('name'));
 		$this->set('song', $this->Song->read());
-	}
-
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Song->create();
-			if ($this->Song->save($this->request->data)) {
-				$this->Session->setFlash(__('The song has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The song could not be saved. Please, try again.'));
-			}
-		}
-		$albums = $this->Song->Album->find('list');
-		$artists = $this->Song->Artist->find('list');
-		$this->set(compact('albums', 'artists'));
 	}
 
 /**

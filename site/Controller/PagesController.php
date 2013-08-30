@@ -93,12 +93,12 @@ class PagesController extends AppController {
 			$this->loadModel('Artist');
 			$this->paginate = array(
 				'Song' => array(
-					'limit' => 10,
+					'limit' => 20,
 					'conditions' => array('OR'=> array('Song.name LIKE'=>"%$query%", 'Song.lyrics LIKE'=>"%$query%")),
 				),
 				'Artist' => array(
-						'limit' => 10,
-						'conditions' => array('Artist.name LIKE'=>"%$query%"),
+					'limit' => 20,
+					'conditions' => array('Artist.name LIKE'=>"%$query%"),
 				),
 			);
 			$this->Artist->recursive = 1;

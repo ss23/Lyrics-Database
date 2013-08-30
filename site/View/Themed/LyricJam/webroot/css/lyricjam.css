@@ -12,7 +12,7 @@ body {
   /* Negative indent footer by its height */
   margin: 0 auto -60px;
   /* Pad bottom by footer height */
-  padding: 0 0 60px;
+  padding: 0 0 70px;
 }
 
 /* Set the fixed height of the footer here */
@@ -67,4 +67,16 @@ body {
 .browse-list a:hover .badge {
 	background-color: #fff;
 	color: #357ebd;
+}
+
+.glyphicon-sort-by-alphabet,
+.glyphicon-sort-by-alphabet-alt {
+	opacity: 0.5;
+}
+
+.match-lyric {
+	color: red;
+}
+.tooltip-inner {
+	max-width: 400px;
 }

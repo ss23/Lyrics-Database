@@ -49,25 +49,6 @@ class ArtistsController extends AppController {
 	}
 
 /**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Artist->create();
-			if ($this->Artist->save($this->request->data)) {
-				$this->Session->setFlash(__('The artist has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The artist could not be saved. Please, try again.'));
-			}
-		}
-		$songs = $this->Artist->Song->find('list');
-		$this->set(compact('songs'));
-	}
-
-/**
  * edit method
  *
  * @param string $id

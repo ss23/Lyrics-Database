@@ -1,7 +1,13 @@
 <div class="artists">
-	<h2><?php echo __('Artists');?></h2>
 
-	<p><?php echo $this->Paginator->sort('name');?></p>
+	<?php echo $this->element('pagination') ?>
+
+	<h2><?php echo __('Artists'); ?></h2>
+
+	<p><?php
+		$alt = ($this->Paginator->sortDir() == 'asc') ? "" : "-alt";
+		echo $this->Paginator->sort('name', 'Name <span class="glyphicon glyphicon-sort-by-alphabet'.$alt.'"></span>', array('escape'=>false, 'class'=>'btn btn-lg'));
+	?></p>
 	
 	<div class="list-group col-md-5">
 	<?php
@@ -13,13 +19,7 @@
 		}
 	?>
 	</div>
-	<?php
-		if ($this->Paginator->hasPage(2)) {
-			echo '<ul class="pagination pagination-lg col-md-12">';
-			echo $this->Paginator->prev('&laquo; Prev', array('tag'=>'li', 'escape'=>false), null, array('tag'=>'li', 'escape'=>false, 'class' => 'disabled', 'disabledTag'=>'a'));
-			echo $this->Paginator->numbers(array('tag'=>'li', 'separator' => '', 'currentTag'=>'a', 'currentClass'=>'active'));
-			echo $this->Paginator->next('Next &raquo;', array('tag'=>'li', 'escape'=>false), null, array('tag'=>'li', 'escape'=>false, 'class' => 'disabled', 'disabledTag'=>'a'));
-			echo '</ul>';
-		}
-	?>
+	
+	<?php echo $this->element('pagination') ?>
+	
 </div>

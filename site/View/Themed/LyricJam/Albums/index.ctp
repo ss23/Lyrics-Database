@@ -1,43 +1,24 @@
-<div class="albums index">
-	<h2><?php echo __('Albums');?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('name');?></th>
-			<th><?php echo $this->Paginator->sort('uuid');?></th>
-			<th class="actions"><?php echo __('Actions');?></th>
-	</tr>
-	<?php
-	$i = 0;
-	foreach ($albums as $album): ?>
-	<tr>
-		<td><?php echo h($album['Album']['id']); ?>&nbsp;</td>
-		<td><?php echo h($album['Album']['name']); ?>&nbsp;</td>
-		<td><?php echo h($album['Album']['uuid']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', 'id' => $album['Album']['id'], 'slug' => $this->Slug->slugify($album['Album']['name']))); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
+<div class="albums">
 
-	<div class="paging">
+	<?php echo $this->element('pagination') ?>
+
+	<h2><?php echo __('Albums'); ?></h2>
+
+	<p><?php
+		$alt = ($this->Paginator->sortDir() == 'asc') ? "" : "-alt";
+		echo $this->Paginator->sort('name', 'Name <span class="glyphicon glyphicon-sort-by-alphabet'.$alt.'"></span>', array('escape'=>false, 'class'=>'btn btn-lg'));
+	?></p>
+	
+	<div class="list-group col-md-5">
 	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+		foreach ($albums as $album) {
+			echo $this->Html->link(h($album['Album']['name']).'<span class="badge pull-right">'.count($album['Song']).'</span>',
+					array('action' => 'view', 'id' => $album['Album']['id'], 'slug' => $this->Slug->slugify($album['Album']['name'])),
+					array('escape'=>false, 'class'=>'list-group-item')
+			);
+		}
 	?>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('List Songs'), array('controller' => 'songs', 'action' => 'index')); ?> </li>
-	</ul>
+	<?php echo $this->element('pagination') ?>
+	
 </div>

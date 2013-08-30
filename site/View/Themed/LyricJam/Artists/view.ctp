@@ -7,17 +7,16 @@
 
 	<h2><?php echo h($artist); ?></h2>
 
+	<div class="list-group col-md-5">
 	<?php
-		if (!empty($albums))
-			foreach ($albums as $album): ?>
-				<div>
-					<?php echo $this->Html->link($album['Album']['name'], array('controller' => 'albums', 'action' => 'view', 'id' => $album['Album']['id'], 'slug' => $this->Slug->slugify($album['Album']['name']))); ?>
-					<span class="song-count">
-						<?php echo count($album['Song']); ?> <?php echo __('Songs'); ?>
-					</span>
-				</div>
-			<?php endforeach; ?>
-
+		foreach ($albums as $album) {
+			echo $this->Html->link(h($album['Album']['name']).'<span class="badge pull-right">'.count($album['Song']).'</span>',
+					array('controller'=>'albums', 'action' => 'view', 'id' => $album['Album']['id'], 'slug' => $this->Slug->slugify($album['Album']['name'])),
+					array('escape'=>false, 'class'=>'list-group-item')
+			);
+		}
+	?>
+	</div>
 </div>
 
 

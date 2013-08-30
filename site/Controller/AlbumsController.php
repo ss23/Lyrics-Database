@@ -6,6 +6,11 @@ App::uses('AppController', 'Controller');
  * @property Album $Album
  */
 class AlbumsController extends AppController {
+	
+	public $paginate = array(
+			'limit' => 30,
+			'order' => array('Album.name' => 'asc')
+	);
 
 
 /**
@@ -14,7 +19,7 @@ class AlbumsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Album->recursive = 0;
+		$this->Album->recursive = 1;
 		$this->set('albums', $this->paginate());
 	}
 
@@ -33,25 +38,6 @@ class AlbumsController extends AppController {
 		}
         $this->set('title_for_layout', $this->Album->Field('name'));
 		$this->set('album', $this->Album->read(null, $id));
-	}
-
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Album->create();
-			if ($this->Album->save($this->request->data)) {
-				$this->Session->setFlash(__('The album has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The album could not be saved. Please, try again.'));
-			}
-		}
-		$songs = $this->Album->Song->find('list');
-		$this->set(compact('songs'));
 	}
 
 /**
