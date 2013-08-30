@@ -42,6 +42,10 @@ class AppController extends Controller {
     public $theme = 'LyricJam';
     
     public function beforeFilter(){
+    	// Disable editing and deleting for now
+    	if ($this->action == 'edit' || $this->action == 'delete')
+    		$this->action = 'view';
+    	
     	// TODO: Investigate better method for caching, and $this->loadModel() vs ClassRegistry::init()
     	$counts = array(
     		'Artists' => ClassRegistry::init('Artists')->getCacheCount(),
