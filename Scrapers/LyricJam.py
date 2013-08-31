@@ -12,7 +12,7 @@ Usage: LyricJam.py {scrape|import} arg
 class LyricJam:
 	
 	def __init__(self):
-		self.con = mdb.connect(DB_HOST, DB_USER, DB_PASS, DB_NAME)
+		self.con = mdb.connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, charset='utf8')
 		self.cur = self.con.cursor()
 		
 	# Really needs to be updated to use UUIDs
