@@ -22,6 +22,38 @@ class ArtistsController extends AppController {
 		$this->set('artists', $this->paginate());
 	}
 
+	/**
+	 * A way to get all the currently 'hot' artists
+	 * Uses last.fm at the moment, could change later
+	 * 
+	 * @return void
+	 */
+	public function hot() {
+		// TODO: Add a "You have no last.fm key!" all nice
+		if (!Configure::read('lastfmkey')) {
+			throw new Exception('No Last.FM key configured');
+		}
+		$json = Cache::read('lastfm_hot_artists', '_hourly_');
+		if (!$json) {
+			$json = json_decode(file_get_contents('http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&format=json&limit=50&api_key=' . Configure::read('lastfmkey')), true); // Grab ~50 artists
+			$json = $json['artists']['artist'];
+			Cache::write('lastfm_hot_artists', $json, '_hourly_');
+		}
+		// For each artist, try match it to a Jam artist
+		$artists = array(); // The LJ artists
+		foreach ($json as $artist) {
+			$a = $this->Artist->findByName($artist['name']);
+			if (!$a) {
+				// We could try a fuzzy search here
+				// TODO: this
+				// Note that if we don't find a poular artist, we should totally be like "YO GUYS, LETS FIND LYRICS FOR THIS ARTIST" somewhere
+			} else {
+				$artists[] = $a;
+			}
+		}	
+		$this->set('artists', $artists);
+	}
+
 /**
  * view method
  *
