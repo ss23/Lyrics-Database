@@ -54,5 +54,41 @@ class Artist extends AppModel {
 			'insertQuery' => ''
 		)
 	);
+	
+	public function getHot($limit = 50) {
+		if (!is_int($limit)) {
+			throw new Exception("Invalid limit");
+		}
+
+		if ($limit > 100) {
+			throw new Exception("We were asked to get more entries than we could");
+		}
+		
+		if (!Configure::read('lastfmkey')) {
+			throw new Exception("No Last.FM key configured");
+		}
+
+		$json = Cache::read('lastfm_hot_artists', '_hourly_');
+		if (!$json) {
+			$json = json_decode(file_get_contents('http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&format=json&limit=500&api_key=' . Configure::read('lastfmkey')), true);
+			// 500 is a little hefty, but it should be okay for now
+			$json = $json['artists']['artist'];
+			Cache::write('lastfm_hot_artists', $json, '_hourly_');
+		}
+
+		$artists = array();
+		foreach ($json as $artist) {
+			if (count($artists) >= $limit) {
+				break; // We have enough
+			}
+			$a = $this->findByName($artist['name']);
+			if ($a) {
+				$artists[] = array('Artist' => $a, 'Art' => $artist['image'][3]['#text']);
+			}
+			// TODO: add a more fuzzy fallback or something
+		}
+
+		return $artists;
+	}
 
 }

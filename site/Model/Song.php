@@ -81,4 +81,60 @@ class Song extends AppModel {
 		)
 	);
 
+	public function getHot($limit = 50) {
+		if (!is_int($limit)) {
+			throw new Exception("Invalid limit");
+		}
+
+		if ($limit > 100) {
+			throw new Exception("We were asked to get more entries than we could");
+		}
+
+		if (!Configure::read('lastfmkey')) {
+			throw new Exception("No Last.FM key configured");
+		}
+
+		$json = Cache::read('lastfm_hot_songs', '_hourly_');
+		if (!$json) {
+			$json = json_decode(file_get_contents('http://ws.audioscrobbler.com/2.0/?method=chart.gethypedtracks&format=json&limit=500&api_key=' . Configure::read('lastfmkey')), true);
+			// 500 is a little hefty, but it should be okay for now
+			$json = $json['tracks']['track'];
+			Cache::write('lastfm_hot_songs', $json, '_hourly_');
+		}
+
+		$songs = array();
+		foreach ($json as $song) {
+			if (count($songs) >= $limit) {
+				break;
+			}
+			// Find the artist first
+			$s = $this->find('first', array(
+				'conditions' => array(
+					'Song.Name' => $song['name'],
+					'Artist.Name' => $song['artist']['name'],
+				),
+				'joins' => array(
+					array(
+						'table' => 'artists_songs',
+						'alias' => 'ArtistSong',
+						'type' => 'inner',
+						'conditions' => array('ArtistSong.song_id = Song.id'),
+					),
+					array(
+						'table' => 'artists',
+						'alias' => 'Artist',
+						'type' => 'inner',
+						'conditions' => array(
+							'Artist.id = ArtistSong.artist_id',
+						),
+					),
+				),
+			));
+			if ($s) {
+				$songs[] = array('Song' => $s, 'Art' => $song['image'][3]['#text']);
+			}
+		}
+
+		return $songs;
+	}
 }
