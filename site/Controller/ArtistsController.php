@@ -29,7 +29,7 @@ class ArtistsController extends AppController {
 	 * @return void
 	 */
 	public function hot() {
-		$this->set('artists', $this->Artist->getHot());
+		$this->set('artists', $this->Artist->getHot(8));
 	}
 
 /**

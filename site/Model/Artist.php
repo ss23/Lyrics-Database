@@ -83,7 +83,7 @@ class Artist extends AppModel {
 			}
 			$a = $this->findByName($artist['name']);
 			if ($a) {
-				$artists[] = array('Artist' => $a, 'Art' => $artist['image'][3]['#text']);
+				$artists[] = array('Artist' => $a, 'Art' => $artist['image'][4]['#text']);
 			}
 			// TODO: add a more fuzzy fallback or something
 		}
