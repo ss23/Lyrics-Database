@@ -107,7 +107,8 @@ before_script:
     }" > Config/database.php
 
 script:
-  - ./Vendor/bin/cake test core AllTests --stderr
+  - ./Console/cake schema create
+  - ./Console/cake test core AllTests --stderr
 
 notifications:
   email: false

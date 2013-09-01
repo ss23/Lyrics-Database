@@ -21,8 +21,8 @@ $ds = DIRECTORY_SEPARATOR;
 $dispatcher = 'Cake' . $ds . 'Console' . $ds . 'ShellDispatcher.php';
 
 if (function_exists('ini_set')) {
-	$root = dirname(dirname(dirname(__FILE__)));
-	ini_set('include_path', $root . $ds. 'lib' . PATH_SEPARATOR . ini_get('include_path'));
+	$root = dirname(dirname(__FILE__)).$ds.'Vendor'.$ds.'pear-pear.cakephp.org'.$ds.'CakePHP';
+	ini_set('include_path', $root . PATH_SEPARATOR . ini_get('include_path'));
 }
 
 if (!include($dispatcher)) {
