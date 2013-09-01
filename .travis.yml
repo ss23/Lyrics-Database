@@ -107,7 +107,7 @@ before_script:
     }" > Config/database.php
 
 script:
-  - ./Console/cake schema create
+  - `yes | ./Console/cake schema create`
   - ./Console/cake test core AllTests --stderr
 
 notifications:
