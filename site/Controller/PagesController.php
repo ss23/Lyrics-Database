@@ -38,12 +38,6 @@ class PagesController extends AppController {
  */
 	public $name = 'Pages';
 
-/**
- * Default helper
- *
- * @var array
- */
-	public $helpers = array('Html', 'Session');
 
 /**
  * This controller does not use a model
@@ -82,38 +76,98 @@ class PagesController extends AppController {
 		$this->render(implode('/', $path));
 	}
 	
-	public function search($query = null) {
-		// TODO: sanitize and prepare query for more advanced searching, especially minimum char count
-		if (is_null($query)) {
-			if (isset($this->params['url']['q']))
-				$this->redirect(array($this->params['url']['q']));
+	public function search() {
+		if (empty($this->params['url']['q'])) {
+			// Possibly could do a flash here, not a big thing I don't think
 			$this->redirect('/');
-		} else {
-			$this->loadModel('Song');
-			$this->loadModel('Artist');
-			$this->paginate = array(
-				'Song' => array(
-					'limit' => 20,
-					'conditions' => array('OR'=> array('Song.name LIKE'=>"%$query%", 'Song.lyrics LIKE'=>"%$query%")),
-				),
-				'Artist' => array(
-					'limit' => 20,
-					'conditions' => array('Artist.name LIKE'=>"%$query%"),
-				),
-			);
-			$this->Artist->recursive = 1;
-			try {
-				$songs = $this->Paginator->paginate('Song');
-			} catch (NotFoundException $e) {
-				$songs = array();
-			}
-			try {
-				$artists = $this->Paginator->paginate('Artist');
-			} catch (NotFoundException $e) {
-				$artists = array();
-			}
-			$this->set(compact('query','songs','artists'));
+			return;
 		}
+
+		// Preferably, we would use a bloody search engine here
+		// TODO: Investigate solr/sphinx/anything (p.s. they're all shit)
+		$this->loadModel('Song');
+		$this->loadModel('Artist');
+		$this->loadModel('Album');
+
+		$query = ($this->params['url']['q']);
+
+		
+		// First, check if there is only one match when we search for this query, in either album name, artist name, or song name
+		$artist = $this->Artist->find('all', array(
+			'conditions' => array('Artist.Name LIKE' => $query),
+			'limit' => 2,
+		));
+		$song = $this->Song->find('all', array(
+			'conditions' => array('Song.Name LIKE' => $query),
+			'limit' => 2,
+		));
+		$album = $this->Album->find('all', array(
+			'conditions' => array('Album.Name LIKE' => $query),
+			'limit' => 2,
+		));
+
+		// TODO: Remove the slug redirect hacks here
+
+		// Only redirect when there's a unique match
+		// Eventually we should add a "and the artist is more popular than X", so that obscure names don't mess this up
+		if (!$album && !$song && (count($artist) == 1)) {
+			// We found a match on only artist!
+			// Redirect them to the artist page
+			$this->redirect(array(
+				'controller' => 'artists',
+				'action' => $artist[0]['Artist']['id'],
+				'' => '',
+			));
+			return;
+		} else if (!$album && (count($song) == 1) && !$artist) {
+			$this->redirect(array(
+				'controller' => 'songs',
+				'action' => $song[0]['Song']['id'],
+				'' => '',
+			));
+			return;
+		} else if ((count($album) == 1) && !$song && !$artist) {
+			$this->redirect(array(
+				'controller' => 'albums',
+				'action' => $album[0]['Album']['id'],
+				'' => '',
+			));
+			return;
+		}
+
+		// If we haven't found anything by now, it's likely a fragment
+
+		$this->paginate = array(
+			'Song' => array(
+				'limit' => 20,
+				'conditions' => array('OR'=> array('Song.name LIKE'=>"%$query%", 'Song.lyrics LIKE'=>"%$query%")),
+			),
+			'Artist' => array(
+				'limit' => 20,
+				'conditions' => array('Artist.name LIKE'=>"%$query%"),
+			),
+			'Album' => array(
+				'limit' => 20,
+				'conditions' => array('Album.name LIKE' => "%$query%"),
+			),
+		);
+		$this->Artist->recursive = 1;
+		try {
+			$songs = $this->Paginator->paginate('Song');
+		} catch (NotFoundException $e) {
+			$songs = array();
+		}
+		try {
+			$artists = $this->Paginator->paginate('Artist');
+		} catch (NotFoundException $e) {
+			$artists = array();
+		}
+		try {
+			$albums = $this->Paginator->paginate('Album');
+		} catch (NotFoundException $e) {
+			$albums = array();
+		}
+		$this->set(compact('query','songs','artists','albums'));
 	}
 
 }
