@@ -1,13 +1,10 @@
 <h2>Hot Artists</h2>
 <div class="fancy-holder">
 	<?php
-	$c = 0;
+	$first = true;
 	foreach ($hot_artists as $artist) {
-		if ($c > 8) {
-			break;
-		}
-		$c++;
-		if ($c == 1) {
+		if ($first) {
+			$first = false;
 			echo '<div class="fancy-item active">';
 		} else {
 			echo '<div class="fancy-item">';
