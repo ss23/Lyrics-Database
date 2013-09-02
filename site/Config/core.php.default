@@ -256,7 +256,7 @@ if (Configure::read('debug') >= 1) {
 }
 
 // Prefix each application on the same server with a different string, to avoid Memcache and APC conflicts.
-$prefix = 'myapp_';
+$prefix = 'lyricjam_';
 
 /**
  * Configure the cache used for general framework caching.  Path information,
@@ -299,3 +299,5 @@ Cache::config('_halfhour_', array(
 
 // Last.fm API key
 Configure::write('lastfmkey', '');
+// Google Analytics ID
+Configure::write('google-analytics', '');
