@@ -20,6 +20,7 @@
  */
 
 App::uses('AppController', 'Controller');
+App::uses('SlugLib', 'LyricJam');
 
 /**
  * Static content controller
@@ -91,6 +92,10 @@ class PagesController extends AppController {
 
 		$query = ($this->params['url']['q']);
 
+		// Required for slug hacks
+		$this->Album->recursive = 4;
+		$this->Artist->recursive = 4;
+
 		
 		// First, check if there is only one match when we search for this query, in either album name, artist name, or song name
 		$artist = $this->Artist->find('all', array(
@@ -106,7 +111,10 @@ class PagesController extends AppController {
 			'limit' => 2,
 		));
 
-		// TODO: Remove the slug redirect hacks here
+		// SlugLib::slugify($string, $slug)
+		// array('action' => 'view', 'song' => $song['Song']['slug'], 'album' => $song['Album'][0]['slug'], 'artist' => $song['Artist'][0]['slug'])
+
+		// TODO: Please, less hacks. please.
 
 		// Only redirect when there's a unique match
 		// Eventually we should add a "and the artist is more popular than X", so that obscure names don't mess this up
@@ -115,22 +123,25 @@ class PagesController extends AppController {
 			// Redirect them to the artist page
 			$this->redirect(array(
 				'controller' => 'artists',
-				'action' => $artist[0]['Artist']['id'],
-				'' => '',
+				'action' => 'view',
+				'artist' => $artist[0]['Artist']['slug'],
 			));
 			return;
 		} else if (!$album && (count($song) == 1) && !$artist) {
 			$this->redirect(array(
 				'controller' => 'songs',
-				'action' => $song[0]['Song']['id'],
-				'' => '',
+				'action' => 'view',
+				'artist' => $song[0]['Artist'][0]['slug'],
+				'album' => $song[0]['Album'][0]['slug'],
+				'song' => $song[0]['Song']['slug'],
 			));
 			return;
 		} else if ((count($album) == 1) && !$song && !$artist) {
 			$this->redirect(array(
 				'controller' => 'albums',
-				'action' => $album[0]['Album']['id'],
-				'' => '',
+				'action' => 'view',
+				'album' => $album[0]['Album']['slug'],
+				'artist' => $album[0]['Song'][0]['Artist'][0]['slug'],
 			));
 			return;
 		}
