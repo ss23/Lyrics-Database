@@ -38,21 +38,17 @@ class ArtistsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
+	public function view($artist_slug) {
 		$this->Artist->recursive = 2;
-		$this->Artist->id = $id;
-		if (!$this->Artist->exists()) {
+		$artist = $this->Artist->findBySlug($artist_slug);
+		if (!$artist) {
 			throw new NotFoundException(__('Invalid artist'));
 		}
-        $this->set('title_for_layout', $this->Artist->Field('name'));
-		$this->set('artist', $this->Artist->Field('name'));
-		$testy = $this->Artist->find('all', array(
-				'conditions' => array('id' => $id)
-			)
-		);
-		$album_ids = array_unique(Set::extract('/Song/Album/id', $testy));
+        $this->set('title_for_layout', $artist['Artist']['name']);
+		$this->set('artist', $artist);
+		$album_ids = array_unique(Hash::extract($artist, 'Song.{n}.Album.{n}.id'));
 		$this->set('albums', $this->Artist->Song->Album->find('all', array(
-				'fields' => array('DISTINCT id', 'name'),
+				'fields' => array('DISTINCT id', 'name', 'slug'),
 				'conditions' => array('id' => $album_ids)
 			)
 		));

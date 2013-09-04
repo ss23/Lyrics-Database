@@ -25,32 +25,37 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-//	Router::connect('/', array('controller' => 'artists', 'action' => 'index'));
 	Router::connect('/', array('controller' => 'home', 'action' => 'index'));
 
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */
 	Router::connect('/search/*', array('controller' => 'pages', 'action' => 'search'));
-	Router::connect('/about', array('controller' => 'pages', 'action' => 'display', 'about'));
-	Router::connect('/docs', array('controller' => 'pages', 'action' => 'display', 'apidocs'));
-	Router::connect('/privacy', array('controller' => 'pages', 'action' => 'display', 'privacy'));
-	Router::connect('/terms', array('controller' => 'pages', 'action' => 'display', 'terms'));
-	Router::connect('/legal', array('controller' => 'pages', 'action' => 'display', 'legal'));
-// 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+	Router::connect('/page/*', array('controller' => 'pages', 'action' => 'display'));
+	
+	Router::connect('/songs', array('controller' => 'songs', 'action' => 'index'));
+	Router::connect('/songs/:page', array('controller' => 'songs', 'action' => 'index'));
+	Router::connect('/albums', array('controller' => 'albums', 'action' => 'index'));
+	Router::connect('/albums/:page', array('controller' => 'albums', 'action' => 'index'));
+	Router::connect('/artists', array('controller' => 'artists', 'action' => 'index'));
+	Router::connect('/artists/:page', array('controller' => 'artists', 'action' => 'index'));
 
 /**
- * Fancy rule for making songs nice
+ * Fancy rules for making songs nice
  */
-	Router::connect('/:controller/:id/:slug', array('action' => 'view'), array('pass' => array('id', 'slug'), 'id' => '[0-9]+'));
+	// 	Router::connect('/:controller/:id/:slug', array('action' => 'view'), array('pass' => array('id', 'slug'), 'id' => '[0-9]+'));
+	Router::connect('/:artist/:album/:song', array('controller'=>'songs', 'action' => 'view'), array('pass' => array('artist', 'album', 'song')));
+	Router::connect('/:artist/:album', array('controller'=>'albums', 'action' => 'view'), array('pass' => array('artist', 'album')));
+	Router::connect('/:artist', array('controller'=>'artists', 'action' => 'view'), array('pass' => array('artist')));
+
 /**
- * Load all plugin routes.  See the CakePlugin documentation on 
+ * Load all plugin routes.  See the CakePlugin documentation on
  * how to customize the loading of plugin routes.
  */
 	CakePlugin::routes();
-
+	
 /**
  * Load the CakePHP default routes. Remove this if you do not want to use
  * the built-in default routes.
  */
-	require CAKE . 'Config' . DS . 'routes.php';
+// 	require CAKE . 'Config' . DS . 'routes.php';

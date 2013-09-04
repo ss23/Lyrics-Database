@@ -30,13 +30,15 @@ class SongsController extends AppController {
  * @return void
  * @throws NotFoundException If invalid song
  */
-	public function view($id = null) {
-        $this->Song->id = $id;
-		if (!$this->Song->exists()) {
+	public function view($artist_slug, $album_slug, $song_slug) {
+		$song = $this->Song->findBySlug($song_slug);
+		$album_list = Hash::extract($song, 'Album.{n}.slug');
+		$artist_list = Hash::extract($song, 'Artist.{n}.slug');
+		if (!$song || !in_array($album_slug,$album_list) || !in_array($artist_slug,$artist_list)) {
 			throw new NotFoundException(__('Invalid song'));
 		}
-		$this->set('title_for_layout', $this->Song->Field('name') . ' by ' . $this->Song->Artist->Field('name'));
-		$this->set('song', $this->Song->read());
+		$this->set('title_for_layout', $song['Song']['name'] . ' by ' . $song['Artist'][0]['name']);
+		$this->set('song', $song);
 	}
 
 /**

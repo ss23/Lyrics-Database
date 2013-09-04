@@ -2,7 +2,7 @@
 
 	<?php
 		$artist = $album['Song'][0]['Artist'][0];
-		$this->Html->addCrumb($artist['name'], array('controller' => 'artists', 'action' => 'view', 'id' => $artist['id'], 'slug' => $this->Slug->slugify($artist['name'])));
+		$this->Html->addCrumb($artist['name'], array('controller' => 'artists', 'action' => 'view', 'artist' => $artist['slug']));
 		$this->Html->addCrumb($album['Album']['name']);
 		echo $this->element("breadcrumbs");
 	?>
@@ -14,7 +14,7 @@
 		<?php
 			foreach ($album['Song'] as $song) {
 				echo $this->Html->link($song['name'],
-						array('controller'=>'songs', 'action' => 'view', 'id' => $song['id'], 'slug' => $this->Slug->slugify($song['name'])),
+						array('controller'=>'songs', 'action' => 'view', 'song' => $song['slug'], 'album' => $album['Album']['slug'], 'artist' => $artist['slug']),
 						array('class'=>'list-group-item')
 				);
 			}

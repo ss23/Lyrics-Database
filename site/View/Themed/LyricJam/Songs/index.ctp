@@ -13,7 +13,7 @@
 	<?php
 		foreach ($songs as $song) {
 			echo $this->Html->link(h($song['Song']['name']).'<span class="pull-right">'.$song['Artist'][0]['name'].'</span>',
-					array('action' => 'view', 'id' => $song['Song']['id'], 'slug' => $this->Slug->slugify($song['Song']['name'])),
+					array('action' => 'view', 'song' => $song['Song']['slug'], 'album' => $song['Album'][0]['slug'], 'artist' => $song['Artist'][0]['slug']),
 					array('escape'=>false, 'class'=>'list-group-item')
 			);
 		}

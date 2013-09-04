@@ -46,6 +46,9 @@ class AppController extends Controller {
     	if ($this->action == 'edit' || $this->action == 'delete')
     		$this->action = 'view';
     	
+    	if (isset($this->request->params['page']))
+    		$this->request->params['named']['page'] = $this->request->params['page'];
+    	
     	// TODO: Investigate better method for caching, and $this->loadModel() vs ClassRegistry::init()
     	$counts = array(
     		'Artists' => ClassRegistry::init('Artists')->getCacheCount(),

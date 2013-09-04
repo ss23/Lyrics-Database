@@ -1,8 +1,8 @@
 <div class="songs">
 
 	<?php
-		$this->Html->addCrumb($song['Artist'][0]['name'], array('controller' => 'artists', 'action' => 'view', 'id' => $song['Artist'][0]['id'], 'slug' => $this->Slug->slugify($song['Artist'][0]['name'])));
-		$this->Html->addCrumb($song['Album'][0]['name'], array('controller' => 'albums', 'action' => 'view', 'id' => $song['Album'][0]['id'], 'slug' => $this->Slug->slugify($song['Album'][0]['name'])));
+		$this->Html->addCrumb($song['Artist'][0]['name'], array('controller' => 'artists', 'action' => 'view', 'artist' => $song['Artist'][0]['slug']));
+		$this->Html->addCrumb($song['Album'][0]['name'], array('controller' => 'albums', 'action' => 'view', 'album' => $song['Album'][0]['slug'], 'artist' => $song['Artist'][0]['slug']));
 		$this->Html->addCrumb($song['Song']['name']);
 		echo $this->element("breadcrumbs");
 	?>

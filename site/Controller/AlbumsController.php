@@ -19,7 +19,7 @@ class AlbumsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Album->recursive = 1;
+		$this->Album->recursive = 2;
 		$this->set('albums', $this->paginate());
 	}
 
@@ -29,15 +29,16 @@ class AlbumsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
+	public function view($artist_slug, $album_slug) {
 		//TODO: used 'containable' instead of recursive for getting artist's name in the view
 		$this->Album->recursive = 2;
-		$this->Album->id = $id;
-		if (!$this->Album->exists()) {
+		$album = $this->Album->findBySlug($album_slug);
+		$artist_list = Hash::extract($album, 'Song.{n}.Artist.{n}.slug');
+		if (!$album || !in_array($artist_slug,$artist_list)) {
 			throw new NotFoundException(__('Invalid album'));
 		}
-        $this->set('title_for_layout', $this->Album->Field('name'));
-		$this->set('album', $this->Album->read(null, $id));
+        $this->set('title_for_layout', $album['Album']['name']);
+		$this->set('album', $album);
 	}
 
 /**

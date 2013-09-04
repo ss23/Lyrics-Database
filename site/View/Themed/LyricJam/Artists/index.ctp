@@ -13,7 +13,7 @@
 	<?php
 		foreach ($artists as $artist) {
 			echo $this->Html->link(h($artist['Artist']['name']).'<span class="badge pull-right">'.count($artist['Song']).'</span>',
-					array('action' => 'view', 'id' => $artist['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['name'])),
+					array('action' => 'view', 'artist' => $artist['Artist']['slug']),
 					array('escape'=>false, 'class'=>'list-group-item')
 			);
 		}
