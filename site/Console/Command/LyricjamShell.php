@@ -48,18 +48,32 @@ class LyricjamShell extends AppShell {
 		// There has to be some way to get this automatically, but...
 		$pages = array();
 		$pages[] = array('loc' => '/', 'changefreq' => 'hourly', 'priority' => '1.0');
-		foreach (array('about', 'apidocs') as $page) { // Static pages
-			$pages[] = array('location' => '/pages/' . $page, 'changefreq' => 'weekly', 'priority' => '0.5');
+		foreach (array('/pages/about', '/pages/apidocs') as $page) { // Static pages
+			$pages[md5($page)] = array('location' => $page, 'changefreq' => 'weekly', 'priority' => '0.5');
 		}
 
 		// Next, add every static page for artists/songs/albums
 		foreach (array('artists', 'songs', 'albums') as $page) {
+			$this->out('Adding ' . $page);
 			// Perhaps should add a new page here for every pagination page
-			$pages[] = array('location' => '/' . $page, 'changefreq' => 'weekly', 'priority' => '0.2');
-			// Do we still have "hot" artists etc? I think it's a nice feature, but it might as well
-			// replace the entire index controller eventually
+			$pages[md5('/' . $page)] = array('location' => '/' . $page, 'changefreq' => 'weekly', 'priority' => '0.4');
 		}
 
+		// Add our real URLs
+		$this->Song->recursive = 1;
+		$limit = 50;
+		$offset = 0;
+		$this->out('Adding all songs');
+		while ($items = $this->Song->find('all', array('limit' => $limit, 'offset' => $offset))) {
+			$this->out('.', 0);
+			foreach ($items as $item) {
+				foreach ($this->findURLsForSong($item) as $url) {
+					$pages[md5($url)] = array('location' => $url, 'changefreq' => 'monthly', 'priority' => '0.2');
+				}
+			}
+			$offset += $limit;
+		}
+			
 		// Generate the XML
 		file_put_contents('/tmp/lj-sitemap.xml', $this->generateXML($pages));
 		$this->out("Done.");
@@ -78,6 +92,14 @@ XML;
 		}
 		$xml .= "</urlset>";
 		return $xml;
+	}
+
+	protected function findURLsForSong($item) {
+		return array(
+			'/' . $item['Artist'][0]['slug'] . '/' . $item['Album'][0]['slug'] . '/' . $item['Song']['slug'],
+			'/' . $item['Artist'][0]['slug'] . '/' . $item['Album'][0]['slug'],
+			'/' . $item['Artist'][0]['slug'],
+		);
 	}
 
 }
