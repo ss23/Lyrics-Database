@@ -18,10 +18,10 @@
 		foreach ($hot_artists as $artist) {
 	?>
 		<div class="item <?php if ($i++ == 0) echo "active" ?>">
-			<a href="<?php echo Router::url(array('action' => 'view', 'controller' => 'artists', 'id' => $artist['Artist']['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['Artist']['name']))) ?>">
-				<?php echo $this->Html->image($artist['Art'], array('alt' => $artist['Artist']['Artist']['name'])) ?>
+			<a href="<?php echo Router::url(array('action' => 'view', 'controller' => 'artists', 'id' => $artist['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['name']))) ?>">
+				<?php echo $this->Html->image($artist['Art'], array('alt' => $artist['Artist']['name'])) ?>
 				<div class="carousel-caption">
-					<h2><?php echo h($artist['Artist']['Artist']['name']); ?></h2>
+					<h2><?php echo h($artist['Artist']['name']); ?></h2>
 				</div>
 			</a>
 		</div>
@@ -47,9 +47,25 @@
 		} else {
 			echo '<div class="fancy-item">';
 		}
-		echo '<div class="col-md-3">' . h($artist['Artist']['Artist']['name']) . '<div class="arrow"></div></div>';
-		echo '<div class="col-md-9">';
-		echo h($artist['Artist']['Artist']['name']);
+		echo '<div class="col-md-3">' . h($artist['Artist']['name']) . '<div class="arrow"></div></div>';
+		echo '<div class="col-md-9 album-list">';
+		foreach ($artist['Album'] as $album){
+			echo $this->Html->link($this->Html->image($this->Thumbnail->get($album['Album'])),
+					array(
+							'controller'=>'albums',
+							'action' => 'view',
+							'artist' => $artist['Artist']['slug'],
+							'album' => $album['Album']['slug']
+					), array(
+							'escape'=>false,
+							'data-toggle'=>'tooltip',
+							'data-placement'=>'top',
+							'data-html'=>'true',
+							'data-original-title'=>$album['Album']['name'],
+							'data-container' => 'body',
+					)
+			);
+		}
 		echo "</div>";
 		echo "</div>";
 	}

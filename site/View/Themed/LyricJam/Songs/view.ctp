@@ -9,6 +9,8 @@
 	
 	<div id="google_translate_element" class="pull-right"></div>
 	
+	<div id="song-album"><?php echo $this->Html->image($this->Thumbnail->get($song['Album'][0], 'small')) ?></div>
+	
 	<h2><?php echo h($song['Song']['name']); ?></h2>
 	<?php echo nl2br(h($song['Song']['lyrics'])); ?>
 	

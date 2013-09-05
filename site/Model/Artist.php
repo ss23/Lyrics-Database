@@ -81,9 +81,22 @@ class Artist extends AppModel {
 			if (count($artists) >= $limit) {
 				break; // We have enough
 			}
+			$this->recursive = -1;
 			$a = $this->findByName($artist['name']);
 			if ($a) {
-				$artists[] = array('Artist' => $a, 'Art' => $artist['image'][4]['#text']);
+				$this->recursive = 2;
+				$artist_full = $this->findByName($artist['name']);
+				$album_ids = array_unique(Hash::extract($artist_full, 'Song.{n}.Album.{n}.id'));
+				$albums = $this->Song->Album->find('all', array(
+						'fields' => array('DISTINCT id', 'name', 'slug', 'art'),
+						'conditions' => array('id' => $album_ids)
+					)
+				);
+				$artists[] = array(
+						'Artist' => $a['Artist'],
+						'Album' => $albums,
+						'Art' => $artist['image'][4]['#text'],
+				);
 			}
 			// TODO: add a more fuzzy fallback or something
 		}

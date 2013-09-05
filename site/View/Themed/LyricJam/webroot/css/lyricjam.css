@@ -175,3 +175,23 @@ body {
 .carousel-inner img {
 	width: 100%;
 }
+
+.album-list {
+	padding-left: 45px;
+	overflow: hidden;
+}
+.album-list > a {
+	display: inline-block;
+	margin: 7px;
+}
+.album-list img {
+	border-radius: 4px;
+}
+
+/* SONG PAGE */
+
+#song-album {
+	float: right;
+	clear: right;
+	margin: 8px;
+}

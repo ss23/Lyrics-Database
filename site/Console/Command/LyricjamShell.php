@@ -27,12 +27,15 @@ class LyricjamShell extends AppShell {
 			$this->{$model}->updateAll(array($model.'.slug'=>"''"));
 		}
 		$this->{$model}->recursive = -1;
-		$data = $this->{$model}->find('all');
+		$data = $this->{$model}->find('all', array(
+			'conditions' => array('slug' => ''),
+		));
 		foreach ($data as $item) {
 			if (empty($item[$model]['slug'])) {
 				$slug = SlugLib::slugify($item[$model]['name']);
 				$duplicate = $this->{$model}->findBySlug($slug);
 				$i = 1;
+				// Keep incrementing slug until there is no duplicate in database
 				while ($duplicate) {
 					$slug = SlugLib::slugify($i++." ".$item[$model]['name']);
 					$duplicate = $this->{$model}->findBySlug($slug);
