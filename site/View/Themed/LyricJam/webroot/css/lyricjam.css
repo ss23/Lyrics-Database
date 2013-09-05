@@ -83,12 +83,19 @@ body {
 
 /* Home page */
 .fancy-holder {
-	box-shadow: 0 1px 2px rgba(0,0,0,0.075);
+	/*box-shadow: 0 1px 2px rgba(0,0,0,0.075);
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.075);
 	background-color: #fff;
 	border: 1px solid #ddd;
-	border-radius: 4px;
+	border-radius: 4px;*/
 	position: relative;
+	width: 50%;
+	min-height: 300px;
+	min-width: 360px;
+}
+
+.fancy-holder > .fancy-item .arrow {
+	display: none;
 }
 
 .fancy-holder > .fancy-item.active .arrow {
@@ -113,13 +120,13 @@ body {
 
 .fancy-holder > .fancy-item > .col-md-3 {
 	border-right: 1px solid #ddd;
-	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 	line-height: 34px;
 	clear: left;
 	float: left;
 }
 .fancy-holder > .fancy-item:first-child > .col-md-3 {
-	border-top: none;
+	border-top: 1px solid #ddd;
 }
 .fancy-holder > .fancy-item > .col-md-3:hover {
 	background-color: #ebebeb;
@@ -129,6 +136,7 @@ body {
 	display: none;
 }
 .fancy-holder > .fancy-item.active > .col-md-9 {
+	right: 0;
 	display: block;
 	position: absolute;
 	padding-right: 0px;
@@ -141,3 +149,14 @@ body {
 	background-color: #ebebeb;
 }
 
+#hot-artists {
+	width: 50%;
+	min-width: 360px;
+}
+.carousel-inner .item {
+	height: 300px;
+	width: 100%;
+}
+.carousel-inner img {
+	width: 100%;
+}

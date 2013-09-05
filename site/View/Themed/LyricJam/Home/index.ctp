@@ -1,5 +1,43 @@
 <h2>Hot Artists</h2>
-<div class="fancy-holder">
+
+<div id="hot-artists" class="carousel slide pull-left">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+  	<?php
+  		$i = 0;
+  		foreach ($hot_artists as $artist) {
+			echo '<li data-target="#hot-artists" data-slide-to="'.$i.'" '.(($i++ == 0)?'class="active"':'').'></li>';
+		}
+	?>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+	<?php 
+		$i = 0;
+		foreach ($hot_artists as $artist) {
+	?>
+		<div class="item <?php if ($i++ == 0) echo "active" ?>">
+			<a href="<?php echo Router::url(array('action' => 'view', 'controller' => 'artists', 'id' => $artist['Artist']['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['Artist']['name']))) ?>">
+				<?php echo $this->Html->image($artist['Art'], array('alt' => $artist['Artist']['Artist']['name'])) ?>
+				<div class="carousel-caption">
+					<h2><?php echo h($artist['Artist']['Artist']['name']); ?></h2>
+				</div>
+			</a>
+		</div>
+	<?php } ?>
+  </div>
+  
+  <!-- Controls -->
+  <a class="left carousel-control" href="#hot-artists" data-slide="prev">
+    <span class="icon-prev"></span>
+  </a>
+  <a class="right carousel-control" href="#hot-artists" data-slide="next">
+    <span class="icon-next"></span>
+  </a>
+</div>
+
+<div class="fancy-holder pull-left">
 	<?php
 	$first = true;
 	foreach ($hot_artists as $artist) {
@@ -11,23 +49,15 @@
 		}
 		echo '<div class="col-md-3">' . h($artist['Artist']['Artist']['name']) . '<div class="arrow"></div></div>';
 		echo '<div class="col-md-9">';
-		echo $this->Html->link('Find Lyrics', array(
-			'action' => 'view',
-			'controller' => 'artists',
-			'id' => $artist['Artist']['Artist']['id'],
-			'slug' => $this->Slug->slugify($artist['Artist']['Artist']['name'])
-		), array('escape'=>false, 'class'=>'btn btn-default'));
-		echo $this->Html->image($artist['Art'], array(
-				'alt' => $artist['Artist']['Artist']['name'],
-				'class' => 'pull-right'
-			)
-		);
+		echo h($artist['Artist']['Artist']['name']);
 		echo "</div>";
 		echo "</div>";
 	}
 	?>
 	<div style="clear: both"></div>
 </div>
+
+<div class="clearfix"></div>
 
 <?php
 echo $this->Html->link('More Artists', array(

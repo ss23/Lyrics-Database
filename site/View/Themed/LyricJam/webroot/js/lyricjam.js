@@ -1,23 +1,32 @@
+function switchFancyItem(el){
+	$('.fancy-item.active').removeClass('active');
+	$(el).addClass('active');
+	// Cycle album list
+}
+
 $(function(){
 	$(".nav a[href='"+document.location.pathname+"']").parent().addClass('active');
 	$(".nav a[href='"+document.location.href+"']").parent().addClass('active');
 	
 	// Rating tooltip
 	$("*[data-toggle='tooltip']").tooltip();
-});
-
-$('document').ready(function() {
+	
+	// Carousel
+	$('#hot-artists').carousel({
+		interval: 5000
+	}).on('slide.bs.carousel', function (e) {
+		var next = $(e.relatedTarget).index();
+		switchFancyItem($('.fancy-item').get(next));
+	});
+	
 	$('.fancy-item').click(function() {
-		// Unactivate the one that's active
-		$('.fancy-item.active').removeClass('active');
-		$(this).addClass('active');
-		// Chrome sux
-		$(this).find('.arrow').css('display', 'none');
-		window.setTimeout(function() {
-			console.log('redrawn');
-			$('.fancy-item.active .arrow').css('display', '');	
-		}, 0);
-		// Like seriously, it sucks. You have to not only toggle the display
-		// but you have to do it in a fucked up redraw like this. I swear
+		switchFancyItem(this);
+		$('#hot-artists').carousel($(this).index());
+	});
+	// Pause carousel cycling when hovering over fancy holder
+	$('.fancy-holder').mouseenter(function(){
+		$('#hot-artists').carousel('pause');
+	}).mouseleave(function(){
+		$('#hot-artists').carousel('cycle');
 	});
 });

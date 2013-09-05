@@ -1,5 +1,6 @@
 Config/database.php
 Config/email.php
+Config/core.php
 webroot/files/
 tmp
 Plugin
