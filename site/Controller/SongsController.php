@@ -37,7 +37,7 @@ class SongsController extends AppController {
 		if (!$song || !in_array($album_slug,$album_list) || !in_array($artist_slug,$artist_list)) {
 			throw new NotFoundException(__('Invalid song'));
 		}
-		$this->set('title_for_layout', $song['Song']['name'] . ' by ' . $song['Artist'][0]['name']);
+		$this->set('title_for_layout', $song['Song']['name'] . ' by ' . $song['Artist'][0]['name'] . ' lyrics');
 		$this->set('song', $song);
 	}
 

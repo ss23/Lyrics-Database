@@ -78,8 +78,9 @@ foreach ($hot_songs as $song) {
 	echo $this->Html->link($html, array(
 		'action' => 'view',
 		'controller' => 'songs',
-		'id' => $song['Song']['Song']['id'],
-		'slug' => $this->Slug->slugify($song['Song']['Song']['name']),
+		'artist' => $song['Song']['Artist'][0]['slug'],
+		'album' => $song['Song']['Album'][0]['slug'],
+		'song' => $song['Song']['Song']['slug'],
 	), array('escape'=>false, 'class'=>'col-xs-4 col-sm-3 col-md-2 thumbnail'));
 }
 ?>

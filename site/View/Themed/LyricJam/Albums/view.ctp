@@ -2,8 +2,8 @@
 
 	<?php
 		$artist = $album['Song'][0]['Artist'][0];
-		$this->Html->addCrumb($artist['name'], array('controller' => 'artists', 'action' => 'view', 'artist' => $artist['slug']));
-		$this->Html->addCrumb($album['Album']['name']);
+		$this->MicrodataHtml->addCrumb($artist['name'], array('controller' => 'artists', 'action' => 'view', 'artist' => $artist['slug']));
+		$this->MicrodataHtml->addCrumb($album['Album']['name']);
 		echo $this->element("breadcrumbs");
 	?>
 

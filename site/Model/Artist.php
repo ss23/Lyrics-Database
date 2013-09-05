@@ -75,7 +75,7 @@ class Artist extends AppModel {
 			$json = $json['artists']['artist'];
 			Cache::write('lastfm_hot_artists', $json, '_hourly_');
 		}
-
+		
 		$artists = array();
 		foreach ($json as $artist) {
 			if (count($artists) >= $limit) {

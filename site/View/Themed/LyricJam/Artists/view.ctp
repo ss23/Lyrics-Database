@@ -1,7 +1,7 @@
 <div class="artists">
 
 	<?php
-		$this->Html->addCrumb($artist['Artist']['name']);
+		$this->MicrodataHtml->addCrumb($artist['Artist']['name']);
 		echo $this->element("breadcrumbs");
 	?>
 

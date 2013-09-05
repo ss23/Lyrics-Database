@@ -32,7 +32,12 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
+if ($_SERVER['HTTP_HOST'] == 'dev.lyricjam.com') {
 	Configure::write('debug', 2);
+} else {
+	Configure::write('debug', 0);
+}
+
 
 /**
  * Configure the Error handler used to handle errors for your application.  By default
@@ -276,3 +281,23 @@ Cache::config('_cake_model_', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
 ));
+
+Cache::config('_hourly_', array(
+	'engine' => $engine,
+	'prefix' => $prefix . 'longterm',
+	'path' => CACHE . 'custom' . DS,
+	'serialize' => ($engine === 'File'),
+	'duration' => '+1 hour'
+));
+
+Cache::config('_halfhour_', array(
+	'engine' => $engine,
+	'prefix' => $prefix . 'halfhour',
+	'path' => CACHE . 'custom' . DS,
+	'duration' => '+30 mins',
+));
+
+// Last.fm API key
+Configure::write('lastfmkey', '7b54de660224ecbaa0566191e0259088');
+// Google Analytics
+Configure::write('google-analytics', 'UA-43672954-1');
