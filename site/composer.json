@@ -8,11 +8,16 @@
         {
             "type": "git",
             "url": "https://github.com/CakeDC/utils.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/josegonzalez/upload.git"
         }
     ],
     "require": {
         "pear-cakephp/cakephp": ">=2.3.4",
-        "CakeDC/utils": "dev-master"
+        "CakeDC/utils": "dev-master",
+        "josegonzalez/upload": "dev-master"
     },
     "require-dev": {
         "cakephp/debug_kit": "2.2.*"

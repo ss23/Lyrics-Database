@@ -48,7 +48,7 @@ class ArtistsController extends AppController {
 		$this->set('artist', $artist);
 		$album_ids = array_unique(Hash::extract($artist, 'Song.{n}.Album.{n}.id'));
 		$this->set('albums', $this->Artist->Song->Album->find('all', array(
-				'fields' => array('DISTINCT id', 'name', 'slug'),
+				'fields' => array('DISTINCT id', 'name', 'slug', 'art'),
 				'conditions' => array('id' => $album_ids)
 			)
 		));

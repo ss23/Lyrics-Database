@@ -12,6 +12,17 @@ class Album extends AppModel {
  * @var string
  */
 	public $displayField = 'name';
+	
+	public $actsAs = array(
+			'Upload.Upload' => array(
+				'art' => array(
+					'thumbnailSizes' => array(
+						'small' => '200x200',
+						'thumb' => '80x80'
+					)
+				)
+			)
+	);
 /**
  * Validation rules
  *
