@@ -22,13 +22,21 @@ class LastfmShell extends AppShell {
 					'fields' => array('DISTINCT id', 'name', 'slug', 'art'),
 					'conditions' => array(
 							'id' => $album_ids,
-							'art' => '',
+							'OR' => array(
+								'art' => '',
+								'art' => null,
+							),
 						)
 				)
 			);
 		} else {
 			$albums = $this->Album->find('all', array(
-					'conditions' => array('art' => '')
+				'conditions' => array(
+					'OR' => array(
+						'art' => '',
+						'art' => null,
+					)
+				)
 			));
 		}
 		
