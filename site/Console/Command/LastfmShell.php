@@ -34,17 +34,20 @@ class LastfmShell extends AppShell {
 		
 		$this->Album->recursive = 2;
 		foreach ($albums as $album){
-// 			if (!empty($album['Album']['uuid']))
-// 				$this->out($album['Album']['uuid']);
 			$a = $this->Album->findById($album['Album']['id']);
 			if (count($a['Song']) > 0) {
-				$json = json_decode(file_get_contents('http://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist='.urlencode($a['Song'][0]['Artist'][0]['name']).'&album='.urlencode($a['Album']['name']).'&format=json&api_key=' . Configure::read('lastfmkey')), true);
+				// If there is a musicbrainz uuid, use it for lastfm api, otherwise just use names
+				if (!empty($album['Album']['uuid']))
+					$json = json_decode(file_get_contents('http://ws.audioscrobbler.com/2.0/?method=album.getinfo&mbid='.$album['Album']['uuid'].'&format=json&api_key=' . Configure::read('lastfmkey')), true);
+				else
+					$json = json_decode(file_get_contents('http://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist='.urlencode($a['Song'][0]['Artist'][0]['name']).'&album='.urlencode($a['Album']['name']).'&format=json&api_key=' . Configure::read('lastfmkey')), true);
+				
 				if (isset($json['error'])) {
 					$this->out('<error>Last.fm error "'.$json['message'].'": '.$a['Song'][0]['Artist'][0]['name'].' - '.$a['Album']['name'].'</error>');
 				} else if (empty($json['album']['image'][4]['#text'])){
 					$this->out('<error>No Last.fm album art: '.$a['Song'][0]['Artist'][0]['name'].' - '.$a['Album']['name'].'</error>');
 				} else {
-					$this->out(print_r($json, true));
+					$this->out(print_r($json, true), 1, Shell::VERBOSE);
 					$a['Album']['art'] = $json['album']['image'][4]['#text'];
 					$this->Album->save($a['Album']);
 					$this->out($a['Album']['name']);
