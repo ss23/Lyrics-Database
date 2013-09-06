@@ -17,7 +17,9 @@ class Album extends AppModel {
 			'Upload.Upload' => array(
 				'art' => array(
 					'thumbnailSizes' => array(
-						'small' => '200x200',
+						'large' => '350x350',
+						'medium' => '250x250',
+						'small' => '175x175',
 						'thumb' => '80x80'
 					)
 				)
