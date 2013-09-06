@@ -96,7 +96,7 @@ class Song extends AppModel {
 
 		$json = Cache::read('lastfm_hot_songs', '_hourly_');
 		if (!$json) {
-			$json = json_decode(file_get_contents('http://ws.audioscrobbler.com/2.0/?method=chart.gethypedtracks&format=json&limit=500&api_key=' . Configure::read('lastfmkey')), true);
+			$json = json_decode(file_get_contents('http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&format=json&limit=500&api_key=' . Configure::read('lastfmkey')), true);
 			// 500 is a little hefty, but it should be okay for now
 			$json = $json['tracks']['track'];
 			Cache::write('lastfm_hot_songs', $json, '_hourly_');
