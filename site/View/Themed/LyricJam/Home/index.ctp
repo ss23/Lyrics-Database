@@ -1,4 +1,14 @@
-<h2>Hot Artists</h2>
+<h2>
+	Hot Artists
+	<?php
+		echo $this->Html->link('More Artists', array(
+			'action' => 'index',
+			'controller' => 'artists',
+		), array(
+			'class' => 'btn btn-default btn-xs',
+		)
+	); ?>
+</h2>
 
 <div id="hot-artists" class="carousel slide pull-left">
   <!-- Indicators -->
@@ -61,7 +71,7 @@
 							'data-toggle'=>'tooltip',
 							'data-placement'=>'top',
 							'data-html'=>'true',
-							'data-original-title'=>$album['Album']['name'],
+							'data-original-title'=>h($album['Album']['name']),
 							'data-container' => 'body',
 					)
 			);
@@ -70,22 +80,26 @@
 		echo "</div>";
 	}
 	?>
-	<div style="clear: both"></div>
 </div>
 
 <div class="clearfix"></div>
 
 <?php
-echo $this->Html->link('More Artists', array(
-		'action' => 'index',
-		'controller' => 'artists',
-	), array(
-		'class' => 'btn btn-default',
-	)
-);
+
 ?>
 
-<h2>Hot Tracks</h2>
+<h2>
+	Hot Tracks
+	<?php
+		echo $this->Html->link('More Songs', array(
+				'action' => 'index',
+				'controller' => 'songs',
+			), array(
+				'class' => 'btn btn-default btn-xs',
+			)
+		);
+	?>
+</h2>
 <div class="list-group">
 <?php
 foreach ($hot_songs as $song) {
@@ -101,13 +115,3 @@ foreach ($hot_songs as $song) {
 }
 ?>
 </div>
-
-<?php
-echo $this->Html->link('More Songs', array(
-		'action' => 'index',
-		'controller' => 'songs',
-	), array(
-		'class' => 'btn btn-default',
-	)
-);
-?>
