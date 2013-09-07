@@ -301,3 +301,5 @@ Cache::config('_halfhour_', array(
 Configure::write('lastfmkey', '');
 // Google Analytics ID
 Configure::write('google-analytics', '');
+// Base URL - used for sitemap generation
+Configure::write('base_url', '');
