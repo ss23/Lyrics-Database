@@ -28,7 +28,12 @@ class LyricjamShell extends AppShell {
 		}
 		$this->{$model}->recursive = -1;
 		$data = $this->{$model}->find('all', array(
-			'conditions' => array('slug' => ''),
+			'conditions' => array(
+				'OR' => array(
+					'slug' => '',
+					'slug' => null,
+				),
+			),
 		));
 		foreach ($data as $item) {
 			if (empty($item[$model]['slug'])) {
