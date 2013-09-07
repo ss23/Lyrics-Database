@@ -98,11 +98,6 @@ body {
 
 /* Home page */
 .fancy-holder {
-	/*box-shadow: 0 1px 2px rgba(0,0,0,0.075);
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.075);
-	background-color: #fff;
-	border: 1px solid #ddd;
-	border-radius: 4px;*/
 	position: relative;
 	width: 50%;
 	min-height: 300px;
@@ -139,6 +134,7 @@ body {
 	line-height: 34px;
 	clear: left;
 	float: left;
+	width: 25%;
 }
 .fancy-holder > .fancy-item:first-child > .col-md-3 {
 	border-top: 1px solid #ddd;
@@ -149,6 +145,7 @@ body {
 }
 .fancy-holder > .fancy-item > .col-md-9 {
 	display: none;
+	width: 75%;
 }
 .fancy-holder > .fancy-item.active > .col-md-9 {
 	right: 0;
@@ -156,9 +153,7 @@ body {
 	position: absolute;
 	padding-right: 0px;
 	height: 100%;
-	margin-left: 285px; /* TODO: Make me responsive somehow */
-}.fancy-holder > .fancy-item.active > .col-md-9 > img.pull-right {
-	height: 100%;
+	margin-left: 285px;
 }
 .fancy-holder > .fancy-item.active > .col-md-3 {
 	background-color: #ebebeb;
@@ -189,7 +184,7 @@ body {
 	background-color: #F5F5F5;
 }
 .album-list::-webkit-scrollbar-thumb{
-	background-color: #000000;
+	background-color: #aad;
 }
 
 .album-list > a {
@@ -199,6 +194,11 @@ body {
 .album-list img {
 	border-radius: 4px;
 	box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 992px) {
+  #hot-artists { width: 100%; }
+  .fancy-holder { width: 100%; }
 }
 
 /* SONG PAGE */
