@@ -28,7 +28,7 @@
 		foreach ($hot_artists as $artist) {
 	?>
 		<div class="item <?php if ($i++ == 0) echo "active" ?>">
-			<a href="<?php echo Router::url(array('action' => 'view', 'controller' => 'artists', 'id' => $artist['Artist']['id'], 'slug' => $this->Slug->slugify($artist['Artist']['name']))) ?>">
+			<a href="<?php echo Router::url(array('action' => 'view', 'controller' => 'artists', 'artist' => $artist['Artist']['slug'])) ?>">
 				<?php echo $this->Html->image($artist['Art'], array('alt' => $artist['Artist']['name'])) ?>
 				<div class="carousel-caption">
 					<h2><?php echo h($artist['Artist']['name']); ?></h2>
