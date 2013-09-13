@@ -2,7 +2,7 @@ import htmlentitydefs, re, urllib2, json, sys
 from musicbrainz2.utils import extractUuid
 from musicbrainz2.webservice import Query, ArtistFilter, WebServiceError
 from bs4 import BeautifulSoup, Tag, Comment
-from ScrapeJam import ScrapeJam, unescape, getHtml, cleanLyrics
+from ScrapeJam import ScrapeJam, unescape, getHtml, cleanLyricList
 
 WIKIA_DOMAIN = 'http://lyrics.wikia.com'
 MB_PATTERN = re.compile('^http://musicbrainz.org*')
@@ -73,7 +73,7 @@ def getLyrics(artist_tuple, album_tuple, song_tuple):
 		comments = lyricsdiv.find_all(text=lambda text:isinstance(text, Comment))
 		for comment in comments:
 			comment.extract()
-	return unescape(cleanLyrics(lyricsdiv))
+	return unescape(cleanLyricList(lyricsdiv.contents))
 
 WIKI_URL = 'http://lyrics.wikia.com/index.php?title=Category:Artists_A'
 def scrape():

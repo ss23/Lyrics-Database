@@ -1,6 +1,6 @@
 import config, urllib2, re
 from bs4 import BeautifulSoup
-from ScrapeJam import ScrapeJam, getHtml, cleanLyrics
+from ScrapeJam import ScrapeJam, getHtml, cleanLyricList
 
 NIGHTWISH_URL = 'http://nightwish.com/en/releases/lyrics'
 
@@ -24,7 +24,7 @@ def getSongs(artist_tuple, album_tuple):
 def getLyrics(artist_tuple, album_tuple, song_tuple):
 	soup = BeautifulSoup(getHtml(NIGHTWISH_URL+song_tuple[1]))
 	lyricsoup = soup.select('.content_main_2c .text')[0]
-	return cleanLyrics(lyricsoup)
+	return cleanLyricList(lyricsoup.contents)
 	
 def scrape():
 	sj = ScrapeJam('nightwish.json', 'nightwish_errs.json')

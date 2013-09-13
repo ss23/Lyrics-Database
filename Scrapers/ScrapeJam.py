@@ -24,12 +24,13 @@ def unescape(text): # When sites try to get sneaky: &#76;&#79;&#76;
 				pass
 		return text # leave as is
 	return re.sub("&#?\w+;", fixup, text)
-	
-def cleanLyrics(lyricsoup):
+
+def cleanLyricList(list):
 	ret = ''
-	for line in lyricsoup.contents:
+	for line in list:
 		ret += unicode(line).strip()
-	return re.sub(r'<br[^>]*>', '\n', ret)
+	ret = re.sub(r'<br[^>]*>', '\n', ret)
+	return ret.strip('\n')
 	
 # Fetch HTML with caching
 htmlCache = {}
@@ -37,7 +38,9 @@ def getHtml(url, clearCache=False):
 	global htmlCache
 	if clearCache: htmlCache = {}
 	if not url in htmlCache:
-		htmlCache[url] = urllib2.urlopen(url).read()
+		req = urllib2.Request(url)
+		req.add_header('User-agent', 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)')
+		htmlCache[url] = urllib2.urlopen(req).read()
 	#print "CACHE: ", [x for x in htmlCache]
 	return htmlCache[url]
 
@@ -119,7 +122,7 @@ class ScrapeJam: # Here's your chance, do your dance, at the ScrapeJam
 					self.songs_pbar = ProgressBar(widgets=[' Songs:  ']+self.widgets, maxval=len(songs)).start()
 					for song in songs:
 						lyrics = lyric_fn(artist, album, song)
-						if len(lyrics) == 0: continue
+						if not lyrics: continue
 						data[artist[0]]['albums'][album[0]]['songs'][song[0]] = {'lyrics':lyrics, 'uuid':None}
 						i[SJ_SONG] += 1
 						done[SJ_SONG] += 1
@@ -130,9 +133,9 @@ class ScrapeJam: # Here's your chance, do your dance, at the ScrapeJam
 				done[SJ_ARTIST] += 1
 				htmlCache = {} # Reset HTML cache after each artist
 		except Exception:
-			#curses.nocbreak()
-			#curses.echo()
-			#curses.endwin()
+			curses.nocbreak()
+			curses.echo()
+			curses.endwin()
 			traceback.print_exc()
 			print "Ended on (%s) (%s) (%s)" % (artist[0], album[0], song[0])
 		except KeyboardInterrupt:
