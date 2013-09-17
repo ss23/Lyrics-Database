@@ -12,7 +12,7 @@ class SiteSchema extends CakeSchema {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'slug' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'art' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'art' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'uuid' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 45, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'url' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'indexes' => array(
@@ -24,9 +24,9 @@ class SiteSchema extends CakeSchema {
 
 	public $albums_songs = array(
 		'song_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
-		'album_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
+		'album_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
 		'indexes' => array(
-			'PRIMARY' => array('column' => 'album_id', 'unique' => 1),
+			'PRIMARY' => array('column' => array('song_id', 'album_id'), 'unique' => 1),
 			'fk_songs_has_albums_albums1' => array('column' => 'album_id', 'unique' => 0),
 			'fk_songs_has_albums_songs' => array('column' => 'song_id', 'unique' => 0)
 		),
@@ -48,9 +48,9 @@ class SiteSchema extends CakeSchema {
 
 	public $artists_songs = array(
 		'song_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
-		'artist_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
+		'artist_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
 		'indexes' => array(
-			'PRIMARY' => array('column' => 'artist_id', 'unique' => 1),
+			'PRIMARY' => array('column' => array('song_id', 'artist_id'), 'unique' => 1),
 			'fk_songs_has_artists_artists1' => array('column' => 'artist_id', 'unique' => 0),
 			'fk_songs_has_artists_songs1' => array('column' => 'song_id', 'unique' => 0)
 		),
