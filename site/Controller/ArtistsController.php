@@ -18,7 +18,7 @@ class ArtistsController extends AppController {
  * @return void
  */
 	public function index($start = null) {
-		if (!is_null($start)) {
+		if (!is_null($start) && $start != 'all') {
 			if ($start == "0-9")
 				$this->paginate['conditions'] = array('Artist.name REGEXP' => "^[0-9]+");
 			else

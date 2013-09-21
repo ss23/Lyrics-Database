@@ -26,7 +26,7 @@
 			);
         ?>
         <ul class="dropdown-menu browse-list">
-          <li><a href="<?php echo Router::url(array('controller' => 'artists', 'action' => 'index')) ?>">
+          <li><a href="<?php echo Router::url(array('controller' => 'artists', 'action' => 'index', 'start' => 'all')) ?>">
             <span class="glyphicon glyphicon-user"></span><span class="browse-item-text"><?php echo __("Artists") ?></span><span class="badge pull-right"><?php echo $counts['Artists'] ?></span>
           </a></li>
           <li><a href="<?php echo Router::url(array('controller' => 'albums', 'action' => 'index')) ?>">

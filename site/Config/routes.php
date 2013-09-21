@@ -37,7 +37,6 @@
 	Router::connect('/songs/:page', array('controller' => 'songs', 'action' => 'index'));
 	Router::connect('/albums', array('controller' => 'albums', 'action' => 'index'));
 	Router::connect('/albums/:page', array('controller' => 'albums', 'action' => 'index'));
-	Router::connect('/artists', array('controller' => 'artists', 'action' => 'index'));
 	Router::connect('/artists/:start', array('controller' => 'artists', 'action' => 'index'), array('pass' => array('start')));
 	Router::connect('/artists/:start/:page', array('controller' => 'artists', 'action' => 'index'), array('pass' => array('start')));
 
