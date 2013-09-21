@@ -1,8 +1,12 @@
 <?php
 
+App::uses('GearmanQueue', 'Gearman.Client');
+
 class LastfmShell extends AppShell {
 	
 	public $uses = array('Album','Artist','Song');
+	
+	public $tasks = array('Gearman.GearmanWorker');
 	
 	public function sync() {
 		$artist_name = (count($this->args) > 0) ? $this->args[0] : null;
@@ -64,6 +68,11 @@ class LastfmShell extends AppShell {
 				$this->out('<error>No songs in album: '.$a['Album']['name'].'</error>');
 			}
 		}
+	}
+	
+	public function worker_start(){
+		$this->GearmanWorker->addFunction('fetch_art', $this, 'sync');
+		$this->GearmanWorker->work();
 	}
 
 }

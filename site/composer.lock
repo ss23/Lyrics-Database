@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "07a2946eda08971f95f851ac0a4449da",
+    "hash": "f79e96d7bbfea6705a2f1edd8c748266",
     "packages": [
         {
             "name": "cakedc/utils",
@@ -113,7 +113,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/josegonzalez/upload.git",
-                "reference": "e9d13abacd49693f55b6ae8dce18bb5aa23d3a0c"
+                "reference": "48083144585121d9f9e50ec951e5522b54807854"
             },
             "require": {
                 "composer/installers": "*",
@@ -125,14 +125,49 @@
             ],
             "description": "CakePHP plugin to handle file uploading sans ridiculous automagic",
             "homepage": "http://github.com/josegonzalez/upload",
-            "time": "2013-08-08 17:47:46"
+            "time": "2013-09-16 17:34:40"
+        },
+        {
+            "name": "lorenzo/cakephp-gearman",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lorenzo/cakephp-gearman.git",
+                "reference": "69acd913abc1a5ad0c65a79baacda967aef4bd82"
+            },
+            "require": {
+                "composer/installers": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "installer-name": "Gearman"
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "José Lorenzo Rodríguez",
+                    "role": "Author"
+                }
+            ],
+            "description": "Gearman utilities for CakePHP",
+            "homepage": "https://github.com/lorenzo/cakephp-gearman",
+            "keywords": [
+                "cakephp",
+                "gearman",
+                "queue",
+                "server"
+            ],
+            "time": "2013-09-05 08:02:35"
         },
         {
             "name": "pear-pear.cakephp.org/CakePHP",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "dist": {
                 "type": "file",
-                "url": "http://pear.cakephp.org/get/CakePHP-2.4.0.tgz",
+                "url": "http://pear.cakephp.org/get/CakePHP-2.4.1.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -140,7 +175,7 @@
                 "php": ">=5.2.8.0"
             },
             "replace": {
-                "pear-cakephp/cakephp": "== 2.4.0.0"
+                "pear-cakephp/cakephp": "== 2.4.1.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -210,7 +245,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "cakedc/utils": 20,
-        "josegonzalez/upload": 20
+        "josegonzalez/upload": 20,
+        "lorenzo/cakephp-gearman": 20
     },
     "platform": [
 

@@ -303,3 +303,8 @@ Configure::write('lastfmkey', '');
 Configure::write('google-analytics', '');
 // Base URL - used for sitemap generation
 Configure::write('base_url', '');
+// Gearman Server(s)
+Configure::write('Gearman', array(
+	'servers' => array('127.0.0.1:4730'),
+	'prefix'  => $prefix . 'gearman',
+));
