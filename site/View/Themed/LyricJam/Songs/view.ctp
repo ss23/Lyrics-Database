@@ -12,7 +12,12 @@
 	<div id="song-album"><?php echo $this->Html->image($this->Thumbnail->get($song['Album'][0], 'small')) ?></div>
 	
 	<h2><?php echo h($song['Song']['name']); ?></h2>
-	<?php echo nl2br(h($song['Song']['lyrics'])); ?>
+	<div class="lyrics">
+	<?php
+		$lyric_html = str_replace("\n\n", "</p><p>&nbsp;</p><p>", h($song['Song']['lyrics']));
+		echo '<p>'.str_replace("\n", "</p><p>", $lyric_html).'</p>';
+	?>
+	</div>
 	
 	<script type="text/javascript">
 	function googleTranslateElementInit() {

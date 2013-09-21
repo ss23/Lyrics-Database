@@ -208,3 +208,16 @@ body {
 	clear: right;
 	margin: 8px;
 }
+
+/* LYRICS PAGE */
+
+.lyrics p {
+	line-height: 10px;
+}
+
+/* BROWSE PAGE */
+
+.letter-list {
+	text-transform: uppercase;
+	font-weight: bold;
+}

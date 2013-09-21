@@ -1,13 +1,27 @@
+<?php 
+$start = (isset($this->passedArgs[0])) ? $this->passedArgs[0] : null;
+?>
+
 <div class="artists">
 
-	<?php echo $this->element('pagination') ?>
+	<ul class="letter-list nav nav-pills">
+	<?php 
+		// Assciated array for index letters: ('a'=>'a', ... '#'=>'0-9')
+		$letters = array_merge(array_combine(range('a','z'),range('a','z')), array("#"=>"0-9"));
+		foreach ($letters as $letter => $letteruri){
+			$class = ($letteruri == $start) ? "active" : "";
+			echo '<li class="'.$class.'">'. $this->Html->link($letter, array('start' => $letteruri)) ."</li>";
+		}
+	?>
+	</ul>
 
-	<h2><?php echo __('Artists'); ?></h2>
+	<?php
+		if ($start)
+			$this->Paginator->options(array('url' => array('start' => $this->passedArgs[0])));
+		echo $this->element('pagination');
+	?>
 
-	<p><?php
-		$alt = ($this->Paginator->sortDir() == 'asc') ? "" : "-alt";
-		echo $this->Paginator->sort('name', 'Name <span class="glyphicon glyphicon-sort-by-alphabet'.$alt.'"></span>', array('escape'=>false, 'class'=>'btn btn-lg'));
-	?></p>
+	<h2><?php echo __('Artists'); ?> <span class="glyphicon glyphicon-sort-by-alphabet"></span></h2>
 	
 	<div class="list-group col-md-5">
 	<?php

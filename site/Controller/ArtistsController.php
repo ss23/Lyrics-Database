@@ -17,7 +17,13 @@ class ArtistsController extends AppController {
  *
  * @return void
  */
-	public function index() {
+	public function index($start = null) {
+		if (!is_null($start)) {
+			if ($start == "0-9")
+				$this->paginate['conditions'] = array('Artist.name REGEXP' => "^[0-9]+");
+			else
+				$this->paginate['conditions'] = array('Artist.name LIKE' => "$start%");
+		}
 		$this->Artist->recursive = 1;
 		$this->set('artists', $this->paginate());
 	}
