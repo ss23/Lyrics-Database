@@ -1,5 +1,23 @@
 {
     "name": "LyricJam",
+    "homepage": "http://lyricjam.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stephen Shkardoon",
+            "homepage": "https://github.com/ss23",
+            "role": "Developer"
+        },
+        {
+            "name": "Thomas Edvalson",
+            "homepage": "https://github.com/Cruel",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/ss23/Lyrics-Database/issues",
+        "source": "https://github.com/ss23/Lyrics-Database"
+	},
     "repositories": [
         {
             "type": "pear",
@@ -11,21 +29,28 @@
         },
         {
             "type": "git",
-            "url": "https://github.com/josegonzalez/upload.git"
+            "url": "https://github.com/josegonzalez/cakephp-upload.git"
         },
         {
             "type": "git",
             "url": "https://github.com/lorenzo/cakephp-gearman.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/Cruel/php-last.fm-api.git"
         }
     ],
     "require": {
+    	"php": ">=5.3.0",
         "pear-cakephp/cakephp": ">=2.3.4",
         "CakeDC/utils": "dev-master",
-        "josegonzalez/upload": "dev-master",
-        "lorenzo/cakephp-gearman": "dev-master"
+        "josegonzalez/cakephp-upload": "dev-master",
+        "lorenzo/cakephp-gearman": "dev-master",
+        "fxb/php-last.fm-api": "dev-master"
     },
     "require-dev": {
-        "cakephp/debug_kit": "2.2.*"
+        "cakephp/debug_kit": "2.2.*",
+        "phpunit/phpunit": "3.7.*"
     },
     "config": {
         "vendor-dir": "Vendor/"
