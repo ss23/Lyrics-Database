@@ -2,8 +2,7 @@
 	Hot Artists
 	<?php
 		echo $this->Html->link('More Artists', array(
-			'action' => 'index',
-			'controller' => 'artists',
+			'controller' => 'artists', 'action' => 'index', 'start' => 'all',
 		), array(
 			'class' => 'btn btn-default btn-xs',
 		)
@@ -58,23 +57,23 @@
 			echo '<div class="fancy-item">';
 		}
 		echo '<div class="col-md-3">' . h($artist['Artist']['name']) . '<div class="arrow"></div></div>';
-		echo '<div class="col-md-9 album-list">';
-		foreach ($artist['Album'] as $album){
-			echo $this->Html->link($this->Html->image($this->Thumbnail->get($album['Album'])),
-					array(
-							'controller'=>'albums',
-							'action' => 'view',
-							'artist' => $artist['Artist']['slug'],
-							'album' => $album['Album']['slug']
-					), array(
-							'escape'=>false,
-							'data-toggle'=>'tooltip',
-							'data-placement'=>'top',
-							'data-html'=>'true',
-							'data-original-title'=>h($album['Album']['name']),
-							'data-container' => 'body',
-					)
-			);
+		echo '<div class="col-md-9 artist-top-tracks">';
+		$i = 0;
+		foreach ($artist['Song'] as $song) {
+			if ($i++ == 5)
+				break;
+			$number = $this->Html->tag('span', $i, array(
+				'style' => 'font-size:'.(28-$i*3).'px',
+			));
+			echo $this->Html->link($number . $this->Html->image($this->Thumbnail->get($song['Album'][0])) . $song['Song']['name'], array(
+					'action' => 'view',
+					'controller' => 'songs',
+					'artist' => $song['Artist'][0]['slug'],
+					'album' => $song['Album'][0]['slug'],
+					'song' => $song['Song']['slug'],
+			), array(
+				'escape' => false,
+			));
 		}
 		echo "</div>";
 		echo "</div>";

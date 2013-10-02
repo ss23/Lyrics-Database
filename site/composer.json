@@ -17,7 +17,7 @@
     "support": {
         "issues": "https://github.com/ss23/Lyrics-Database/issues",
         "source": "https://github.com/ss23/Lyrics-Database"
-	},
+    },
     "repositories": [
         {
             "type": "pear",

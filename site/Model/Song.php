@@ -80,38 +80,12 @@ class Song extends AppModel {
 			'insertQuery' => ''
 		)
 	);
-
-	public function getHot($limit = 50) {
-		if (!is_int($limit)) {
-			throw new Exception("Invalid limit");
-		}
-
-		if ($limit > 100) {
-			throw new Exception("We were asked to get more entries than we could");
-		}
-
-		if (!Configure::read('lastfmkey')) {
-			throw new Exception("No Last.FM key configured");
-		}
-
-		$json = Cache::read('lastfm_hot_songs', '_hourly_');
-		if (!$json) {
-			$json = json_decode(file_get_contents('http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&format=json&limit=500&api_key=' . Configure::read('lastfmkey')), true);
-			// 500 is a little hefty, but it should be okay for now
-			$json = $json['tracks']['track'];
-			Cache::write('lastfm_hot_songs', $json, '_hourly_');
-		}
-
-		$songs = array();
-		foreach ($json as $song) {
-			if (count($songs) >= $limit) {
-				break;
-			}
-			// Find the artist first
-			$s = $this->find('first', array(
+	
+	public function findByArtist($songName, $artistName, $options = array()){
+		$defaults = array(
 				'conditions' => array(
-					'Song.Name' => $song['name'],
-					'Artist.Name' => $song['artist']['name'],
+					'Song.Name' => $songName,
+					'Artist.Name' => $artistName,
 				),
 				'joins' => array(
 					array(
@@ -129,12 +103,43 @@ class Song extends AppModel {
 						),
 					),
 				),
-			));
+			);
+		
+		return $this->find('first', array_merge($defaults, $options));
+	}
+
+	public function getHot($limit = 50, $cached = true) {
+		if (!is_int($limit)) {
+			throw new Exception("Invalid limit");
+		}
+
+		if ($limit > 100) {
+			throw new Exception("We were asked to get more entries than we could");
+		}
+		
+		if ($cached) {
+			$songs = Cache::read('hot_songs_'.$limit, '_hourly_');
+			if ($songs !== false)
+				return $songs;
+		}
+
+		$apidata = LastFM\Geo::getTopTracks("united states", null, 500);
+		// 500 is a little hefty, but it should be okay for now
+
+		$songs = array();
+		foreach ($apidata as $song) {
+			if (count($songs) >= $limit) {
+				break;
+			}
+			// Find the artist first
+			$s = $this->findByArtist($song->getName(), $song->getArtist()->getName());
+
 			if ($s) {
-				$songs[] = array('Song' => $s, 'Art' => $song['image'][3]['#text']);
+				$songs[] = array('Song' => $s, 'Art' => $song->getImage(LastFM\Media::IMAGE_EXTRALARGE));
 			}
 		}
 
+		Cache::write('hot_songs_'.$limit, $songs, '_hourly_');
 		return $songs;
 	}
 }

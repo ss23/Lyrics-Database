@@ -55,7 +55,7 @@ class Artist extends AppModel {
 		)
 	);
 	
-	public function getHot($limit = 50) {
+	public function getHot($limit = 50, $cached = true) {
 		if (!is_int($limit)) {
 			throw new Exception("Invalid limit");
 		}
@@ -64,43 +64,43 @@ class Artist extends AppModel {
 			throw new Exception("We were asked to get more entries than we could");
 		}
 		
-		if (!Configure::read('lastfmkey')) {
-			throw new Exception("No Last.FM key configured");
+		if ($cached) {
+			$artists = Cache::read('hot_artists_'.$limit, '_hourly_');
+			if ($artists !== false)
+				return $artists;
 		}
 
-		$json = Cache::read('lastfm_hot_artists', '_hourly_');
-		if (!$json) {
-			$json = json_decode(file_get_contents('http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&format=json&limit=500&api_key=' . Configure::read('lastfmkey')), true);
-			// 500 is a little hefty, but it should be okay for now
-			$json = $json['artists']['artist'];
-			Cache::write('lastfm_hot_artists', $json, '_hourly_');
-		}
+		$apidata = LastFM\Geo::getTopArtists("united states", 500);
+		// 500 is a little hefty, but it should be okay for now
 		
 		$artists = array();
-		foreach ($json as $artist) {
+		foreach ($apidata as $artist) {
 			if (count($artists) >= $limit) {
 				break; // We have enough
 			}
 			$this->recursive = -1;
-			$a = $this->findByName($artist['name']);
+			$a = $this->findByName($artist->getName());
 			if ($a) {
-				$this->recursive = 2;
-				$artist_full = $this->findByName($artist['name']);
-				$album_ids = array_unique(Hash::extract($artist_full, 'Song.{n}.Album.{n}.id'));
-				$albums = $this->Song->Album->find('all', array(
-						'fields' => array('DISTINCT id', 'name', 'slug', 'art'),
-						'conditions' => array('id' => $album_ids)
-					)
-				);
 				$artists[] = array(
 						'Artist' => $a['Artist'],
-						'Album' => $albums,
-						'Art' => $artist['image'][4]['#text'],
+						'Song' => array(),
+						'Art' => $artist->getImage(),
 				);
 			}
 			// TODO: add a more fuzzy fallback or something
 		}
+		// Get top tracks for each artist
+		$this->Song->recursive = 2;
+		foreach ($artists as &$artist){
+			$tracks = LastFM\Artist::getTopTracks($artist['Artist']['name']);
+			foreach ($tracks as $track) {
+				$song = $this->Song->findByArtist($track->getName(), $artist['Artist']['name']);
+				if ($song)
+					$artist['Song'][] = $song;
+			}
+		}
 
+		Cache::write('hot_artists_'.$limit, $artists, '_hourly_');
 		return $artists;
 	}
 

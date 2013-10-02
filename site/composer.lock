@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "d2bc97c229779b6160457a92d4d63a26",
+    "hash": "b1d5e9ed569b1f59c796d22c9b154d08",
     "packages": [
         {
             "name": "cakedc/utils",
@@ -113,7 +113,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Cruel/php-last.fm-api.git",
-                "reference": "e9d40b58bff56998be696081c4cfce02d7f1977c"
+                "reference": "d6fcb353a28395b70fd757faed96a206f078aa56"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -133,7 +133,7 @@
                 "last.fm",
                 "music"
             ],
-            "time": "2013-09-26 01:21:16"
+            "time": "2013-10-01 17:17:05"
         },
         {
             "name": "josegonzalez/cakephp-upload",
@@ -141,7 +141,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/josegonzalez/cakephp-upload.git",
-                "reference": "44adea99fb8733185e38a923220a163883f4abf4"
+                "reference": "59ae084f0f1cde2158c4f27777f4ac98994b07be"
             },
             "require": {
                 "composer/installers": "*"
@@ -294,7 +294,7 @@
                 "issues": "https://github.com/josegonzalez/cakephp-upload/issues",
                 "source": "https://github.com/josegonzalez/cakephp-upload"
             },
-            "time": "2013-09-20 12:52:53"
+            "time": "2013-09-29 05:06:45"
         },
         {
             "name": "lorenzo/cakephp-gearman",
@@ -776,17 +776,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.3.4",
+            "version": "v2.3.5",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "5a279f1b5f5e1045a6c432354d9ea727ff3a9847"
+                "reference": "6bb881b948368482e1abf1a75c08bcf88a1c5fc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/5a279f1b5f5e1045a6c432354d9ea727ff3a9847",
-                "reference": "5a279f1b5f5e1045a6c432354d9ea727ff3a9847",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/6bb881b948368482e1abf1a75c08bcf88a1c5fc3",
+                "reference": "6bb881b948368482e1abf1a75c08bcf88a1c5fc3",
                 "shasum": ""
             },
             "require": {
@@ -819,7 +819,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2013-08-24 15:26:22"
+            "time": "2013-09-22 18:04:39"
         }
     ],
     "aliases": [

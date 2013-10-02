@@ -153,7 +153,6 @@ body {
 	position: absolute;
 	padding-right: 0px;
 	height: 100%;
-	margin-left: 285px;
 }
 .fancy-holder > .fancy-item.active > .col-md-3 {
 	background-color: #ebebeb;
@@ -171,29 +170,49 @@ body {
 	width: 100%;
 }
 
-.album-list {
-	padding-left: 35px;
+.artist-top-tracks {
 	overflow-y: auto;
 }
-.album-list::-webkit-scrollbar-track {
+.artist-top-tracks::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	background-color: #F5F5F5;
 }
-.album-list::-webkit-scrollbar {
+.artist-top-tracks::-webkit-scrollbar {
 	width: 6px;
 	background-color: #F5F5F5;
 }
-.album-list::-webkit-scrollbar-thumb{
+.artist-top-tracks::-webkit-scrollbar-thumb{
 	background-color: #aad;
 }
 
-.album-list > a {
-	display: inline-block;
-	margin: 7px;
+.artist-top-tracks > a {
+	text-decoration: none;
+	text-align: left;
+	display: block;
+	margin-left: -15px;
+	padding-left: 35px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
-.album-list img {
+.artist-top-tracks > a:hover {
+	background-color: #ebebeb;
+	cursor: pointer;
+}
+.artist-top-tracks img {
+	width: 48px;
+	margin: 4px 12px 4px 12px;
 	border-radius: 4px;
 	box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.8);
+}
+.artist-top-tracks span {
+	display: inline;
+	margin-right: 10px;
+}
+.artist-top-tracks a:first-child {
+	font-weight: bold;
+}
+.artist-top-tracks a:first-child img {
+	width: 64px;
 }
 
 @media (max-width: 992px) {
