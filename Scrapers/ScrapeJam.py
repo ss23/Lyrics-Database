@@ -28,18 +28,18 @@ def unescape(text): # When sites try to get sneaky: &#76;&#79;&#76;
 def cleanLyricList(list):
 	ret = ''
 	for line in list:
-		ret += unicode(line).strip()
+		ret += line.encode('utf-8').strip()
 	ret = re.sub(r'<br[^>]*>', '\n', ret)
 	return ret.strip('\n')
 	
 # Fetch HTML with caching
 htmlCache = {}
-def getHtml(url, clearCache=False):
+def getHtml(url, clearCache=False, user_agent='Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'):
 	global htmlCache
 	if clearCache: htmlCache = {}
 	if not url in htmlCache:
 		req = urllib2.Request(url)
-		req.add_header('User-agent', 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)')
+		req.add_header('User-agent', user_agent)
 		htmlCache[url] = urllib2.urlopen(req).read()
 	#print "CACHE: ", [x for x in htmlCache]
 	return htmlCache[url]
@@ -112,18 +112,18 @@ class ScrapeJam: # Here's your chance, do your dance, at the ScrapeJam
 				albums = album_fn(artist)
 				if len(albums) == 0: continue
 				i[SJ_ALBUM] = 0
-				data[artist[0]] = {'albums':{}, 'uuid':None}
+				data[artist[0]] = {'albums':{}, 'uuid':None, 'url':artist[1]}
 				self.albums_pbar = ProgressBar(widgets=[' Albums: ']+self.widgets, maxval=len(albums)).start()
 				for album in albums:
 					songs = song_fn(artist, album)
 					if len(songs) == 0: continue
 					i[SJ_SONG] = 0
-					data[artist[0]]['albums'][album[0]] = {'songs':{}, 'uuid':None}
+					data[artist[0]]['albums'][album[0]] = {'songs':{}, 'uuid':None, 'url':album[1]}
 					self.songs_pbar = ProgressBar(widgets=[' Songs:  ']+self.widgets, maxval=len(songs)).start()
 					for song in songs:
 						lyrics = lyric_fn(artist, album, song)
-						if not lyrics: continue
-						data[artist[0]]['albums'][album[0]]['songs'][song[0]] = {'lyrics':lyrics, 'uuid':None}
+						if len(lyrics) == 0: continue
+						data[artist[0]]['albums'][album[0]]['songs'][song[0]] = {'lyrics':lyrics, 'uuid':None, 'url':song[1]}
 						i[SJ_SONG] += 1
 						done[SJ_SONG] += 1
 						self.drawProgress((artist[0],album[0],song[0]), i, done)
@@ -155,11 +155,11 @@ class ScrapeJam: # Here's your chance, do your dance, at the ScrapeJam
 		self.albums_pbar.update(values[1])
 		self.move(2,0)
 		self.songs_pbar.update(values[2])
-		self.win.addstr(4, 0, " Artist: "+names[0].encode('utf_8'))
+		self.win.addstr(4, 0, " Artist: "+names[0].encode('utf8'))
 		self.refresh()
-		self.win.addstr(5, 0, " Album:  "+(names[1] if names[1] else "N/A").encode('utf_8'))
+		self.win.addstr(5, 0, " Album:  "+(names[1] if names[1] else "N/A").encode('utf8'))
 		self.refresh()
-		self.win.addstr(6, 0, " Song:   "+names[2].encode('utf_8'))
+		self.win.addstr(6, 0, " Song:   "+names[2].encode('utf8'))
 		self.refresh()
 		self.win.addstr(8, 0, " COMPLETED")
 		self.win.addstr(9, 0, " Artists: %d  Albums: %d  Songs: %d" % tuple(done))
