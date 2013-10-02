@@ -32,6 +32,9 @@ spl_autoload_unregister(array('App', 'load'));
 spl_autoload_register(array('App', 'load'), true, true);
 
 // Set LastFM API key
+if (!Configure::read('lastfmkey')) {
+	throw new Exception("No Last.FM key configured");
+}
 LastFM\Caller\CallerFactory::getDefaultCaller()->setApiKey(Configure::read('lastfmkey'));
 
 /**
