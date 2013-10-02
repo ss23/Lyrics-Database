@@ -284,17 +284,19 @@ Cache::config('_cake_model_', array(
 
 Cache::config('_hourly_', array(
 	'engine' => $engine,
-	'prefix' => $prefix . 'longterm',
+	'prefix' => $prefix . 'hourly',
 	'path' => CACHE . 'custom' . DS,
 	'serialize' => ($engine === 'File'),
 	'duration' => '+1 hour'
 ));
 
-Cache::config('_halfhour_', array(
-	'engine' => $engine,
-	'prefix' => $prefix . 'halfhour',
-	'path' => CACHE . 'custom' . DS,
-	'duration' => '+30 mins',
+Cache::config('longterm', array(
+	'engine' => 'File',
+	'prefix' => $prefix . 'longterm',
+	'duration' => '+999 days',
+	'probability' => 100,
+	'serialize' => true,
+	'path' => CACHE . 'longterm' . DS,
 ));
 
 // Last.fm API key
