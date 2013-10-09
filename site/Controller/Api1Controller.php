@@ -12,17 +12,26 @@ class Api1Controller extends AppController {
 			'RequestHandler',
 			'Paginator',
 	);
+	
+	public $data;
 
-	public function artist($name){
-		$this->Artist->recursive = -1;
-		$data = $this->Artist->findByName($name);
-		// 		print_r($data);
-		$this->set('data', array($data));
+	public function song($artist=null, $song=null){
+		$this->data = $this->Song->findByArtist($song, $artist);
+		if (empty($this->data))
+			throw new NotFoundException(__('Invalid song'));
 	}
 
-	public function beforeFilter() {
-		parent::beforeFilter();
-		$this->set('_serialize', 'data');
+	public function beforeRender() {
+		parent::beforeRender();
+		
+		// XML format doesn't allow top-level arrays
+		if ($this->request->params['ext'] == "xml")
+			$this->data = array($this->data);
+		
+		$this->set(array(
+			'data' => $this->data,
+			'_serialize' => 'data',
+		));
 	}
 }
 
