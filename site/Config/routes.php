@@ -20,6 +20,18 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
+$subdomain = explode(".", $_SERVER['HTTP_HOST'])[0];
+
+if ($subdomain == 'api') {
+	
+	Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'apidocs'));
+	Router::connect('/v:version/:action/*', array('controller'=>'api'), array('version'=>'[0-9]+'));
+	Router::parseExtensions();
+	
+} else {
+
+	Router::parseExtensions();
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
@@ -59,3 +71,4 @@
  * the built-in default routes.
  */
 // 	require CAKE . 'Config' . DS . 'routes.php';
+}
