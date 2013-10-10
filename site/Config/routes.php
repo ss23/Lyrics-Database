@@ -23,6 +23,7 @@
 
 if (SUBDOMAIN == 'api') {
 
+	Router::connect('/', array('controller' => 'home', 'action' => 'api'));
 	Router::connect('/v:version/:action/*', array('controller'=>'api'), array('version'=>'[0-9]+'));
 	Router::parseExtensions();
 	

@@ -14,5 +14,9 @@ class HomeController extends AppController {
 		$songs = $this->Song->getHot(20);
 		$this->set('hot_songs', $songs);
 	}
+	
+	public function api() {
+		$this->redirect("http://lyricjam.com");
+	}
 }
 
