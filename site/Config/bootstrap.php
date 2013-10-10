@@ -37,6 +37,8 @@ if (!Configure::read('lastfmkey')) {
 }
 LastFM\Caller\CallerFactory::getDefaultCaller()->setApiKey(Configure::read('lastfmkey'));
 
+define('SUBDOMAIN', explode(".", $_SERVER['HTTP_HOST'])[0]);
+
 /**
  * Cache Engine Configuration
  * Default settings provided below

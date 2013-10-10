@@ -42,6 +42,9 @@ class AppController extends Controller {
     public $theme = 'LyricJam';
     
     public function beforeFilter(){
+    	if (SUBDOMAIN == "api")
+    		$this->layout = "api";    	
+    	
     	// Disable editing and deleting for now
     	if ($this->action == 'edit' || $this->action == 'delete')
     		$this->action = 'view';
