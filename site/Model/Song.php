@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('GearmanQueue', 'Gearman.Client');
 /**
  * Song Model
  *
@@ -121,6 +122,12 @@ class Song extends AppModel {
 			$songs = Cache::read('hot_songs_'.$limit, '_hourly_');
 			if ($songs !== false)
 				return $songs;
+			GearmanQueue::execute('getHotSongs', $limit);
+			$songs = Cache::read('hot_songs_'.$limit, 'longterm');
+			if ($songs !== false)
+				return $songs;
+			// Empty page until gearman proceses the above task
+			return array();
 		}
 
 		$apidata = LastFM\Geo::getTopTracks("united states", null, 500);
@@ -140,6 +147,8 @@ class Song extends AppModel {
 		}
 
 		Cache::write('hot_songs_'.$limit, $songs, '_hourly_');
+		Cache::write('hot_songs_'.$limit, $songs, 'longterm');
 		return $songs;
 	}
+	
 }

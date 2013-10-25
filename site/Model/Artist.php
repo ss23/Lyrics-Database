@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('GearmanQueue', 'Gearman.Client');
 /**
  * Artist Model
  *
@@ -68,6 +69,12 @@ class Artist extends AppModel {
 			$artists = Cache::read('hot_artists_'.$limit, '_hourly_');
 			if ($artists !== false)
 				return $artists;
+			GearmanQueue::execute('getHotArtists', $limit);
+			$artists = Cache::read('hot_artists_'.$limit, 'longterm');
+			if ($artists !== false)
+				return $artists;
+			// Empty page until gearman proceses the above task
+			return array();
 		}
 
 		$apidata = LastFM\Geo::getTopArtists("united states", 500);
@@ -101,6 +108,7 @@ class Artist extends AppModel {
 		}
 
 		Cache::write('hot_artists_'.$limit, $artists, '_hourly_');
+		Cache::write('hot_artists_'.$limit, $artists, 'longterm');
 		return $artists;
 	}
 

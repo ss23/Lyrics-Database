@@ -1,12 +1,15 @@
 <?php
 
 App::uses('SlugLib', 'LyricJam');
+App::uses('GearmanQueue', 'Gearman.Client');
 
 class LyricjamShell extends AppShell {
 	
 	public $uses = array('Album','Artist','Song');
 	
 	public $helpers = array('Slug');
+	
+	public $tasks = array('Gearman.GearmanWorker');
 
 // 	public function main() {
 // 		$this->out('Sup bro.');
@@ -110,6 +113,28 @@ XML;
 			'/' . $item['Artist'][0]['slug'] . '/' . $item['Album'][0]['slug'],
 			'/' . $item['Artist'][0]['slug'],
 		);
+	}
+	
+	public function start_cache_worker() {
+		$this->GearmanWorker->addFunction('getHotArtists', $this, 'getHotArtists');
+		$this->GearmanWorker->addFunction('getHotSongs', $this, 'getHotSongs');
+		$this->GearmanWorker->work();
+	}
+	
+	public function getHotSongs($data, $job) {
+		// Check cache to prevent multiple identical queued jobs from running consecutively
+		if (Cache::read('hot_songs_'.$data, '_hourly_') === false)
+			return $this->Song->getHot($data, false);
+		echo "skipped\n";
+		return false;
+	}
+	
+	public function getHotArtists($data, $job) {
+		// Check cache to prevent multiple identical queued jobs from running consecutively
+		if (Cache::read('hot_artists_'.$data, '_hourly_') === false)
+			return $this->Artist->getHot($data, false);
+		echo "skipped\n";
+		return false;
 	}
 
 }
